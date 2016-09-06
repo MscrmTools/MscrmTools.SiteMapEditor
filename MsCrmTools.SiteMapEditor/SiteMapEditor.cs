@@ -109,7 +109,8 @@ namespace MsCrmTools.SiteMapEditor
 
         private void resetCRM2016SiteMapToDefaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ConnectionDetail.OrganizationMajorVersion != 8)
+            if (ConnectionDetail.OrganizationMajorVersion != 8 ||
+                ConnectionDetail.OrganizationMajorVersion == 8 && ConnectionDetail.OrganizationMinorVersion != 0)
             {
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a CRM 2016 organization! Are you sure you want to continue?",
