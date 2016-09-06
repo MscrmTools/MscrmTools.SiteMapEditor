@@ -686,5 +686,6 @@
         private System.Windows.Forms.ToolStripMenuItem loadEntitiesAndWebResourcesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem resetCRM2016SiteMapToDefaultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetCRM2016Update1SiteMapToDefaultToolStripMenuItem;
     }
 }
