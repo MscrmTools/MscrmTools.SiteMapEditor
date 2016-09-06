@@ -61,6 +61,7 @@
             this.resetCRM2015SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCRM2015Update1SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetCRM2016Update1SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nodeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addSystemAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSystemGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -364,7 +365,8 @@
             this.resetCRM2013SiteMapToDefaultToolStripMenuItem,
             this.resetCRM2015SiteMapToDefaultToolStripMenuItem,
             this.resetCRM2015Update1SiteMapToDefaultToolStripMenuItem,
-            this.resetCRM2016SiteMapToDefaultToolStripMenuItem});
+            this.resetCRM2016SiteMapToDefaultToolStripMenuItem,
+            this.resetCRM2016Update1SiteMapToDefaultToolStripMenuItem});
             this.toolStripDropDownButtonMoreActions.Enabled = false;
             this.toolStripDropDownButtonMoreActions.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonMoreActions.Image")));
             this.toolStripDropDownButtonMoreActions.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -421,6 +423,13 @@
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem.Text = "Reset CRM 2016 SiteMap to default";
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetCRM2016SiteMapToDefaultToolStripMenuItem_Click);
+            // 
+            // resetCRM2016Update1SiteMapToDefaultToolStripMenuItem
+            // 
+            this.resetCRM2016Update1SiteMapToDefaultToolStripMenuItem.Name = "resetCRM2016Update1SiteMapToDefaultToolStripMenuItem";
+            this.resetCRM2016Update1SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
+            this.resetCRM2016Update1SiteMapToDefaultToolStripMenuItem.Text = "Reset CRM 2016 Update 1 SiteMap to default";
+            this.resetCRM2016Update1SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetCRM2016Update1SiteMapToDefaultToolStripMenuItem_Click);
             // 
             // nodeMenu
             // 
