@@ -204,6 +204,12 @@
     <Compile Include="Forms\DashboardPicker.Designer.cs">
       <DependentUpon>DashboardPicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SiteMapPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SiteMapPicker.Designer.cs">
+      <DependentUpon>SiteMapPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\WebRessources\CreateWebResourceDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,6 +276,9 @@
     <EmbeddedResource Include="Forms\DashboardPicker.resx">
       <DependentUpon>DashboardPicker.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SiteMapPicker.resx">
+      <DependentUpon>SiteMapPicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\WebRessources\CreateWebResourceDialog.resx">
       <DependentUpon>CreateWebResourceDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -313,10 +322,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\sitemap2016SP1.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy /y "$(TargetPath)" "$(TargetDir)Plugins\"</PostBuildEvent>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

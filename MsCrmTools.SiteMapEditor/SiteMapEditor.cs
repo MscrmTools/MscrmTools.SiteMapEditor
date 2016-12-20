@@ -62,6 +62,20 @@ namespace MsCrmTools.SiteMapEditor
         public SiteMapEditor()
         {
             InitializeComponent();
+
+            Load += (sender, e) =>
+            {
+                if (ConnectionDetail != null
+                    && ConnectionDetail.OrganizationMajorVersion == 8
+                    && ConnectionDetail.OrganizationMinorVersion == 2
+                    )
+                {
+                    lblInfo.Text =
+                        "Editing Microsoft Dynamics 365 Apps Sitemaps is currently not possible due to SDK limitations. If you need to edit this kind of Sitemap, please use the integrated Sitemap designer in Microsoft Dynamics 365";
+
+                    pnlInfo.Visible = true;
+                }
+            };
         }
 
         #region Main ToolStrip Menu
@@ -109,7 +123,7 @@ namespace MsCrmTools.SiteMapEditor
 
         private void resetCRM2016SiteMapToDefaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ConnectionDetail.OrganizationMajorVersion != 8)
+            if (ConnectionDetail.OrganizationMajorVersion != 8 || ConnectionDetail.OrganizationMajorVersion == 8 && ConnectionDetail.OrganizationMinorVersion != 0)
             {
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a CRM 2016 organization! Are you sure you want to continue?",
@@ -118,6 +132,19 @@ namespace MsCrmTools.SiteMapEditor
             }
 
             ResetSiteMap("2016");
+        }
+
+        private void resetCRM2016SP1SiteMapToDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ConnectionDetail.OrganizationMajorVersion != 8 || ConnectionDetail.OrganizationMajorVersion == 8 && ConnectionDetail.OrganizationMinorVersion != 1)
+            {
+                if (DialogResult.No == MessageBox.Show(this,
+                    "Your current organization is not a CRM 2016 SP1/Update 1 organization! Are you sure you want to continue?",
+                    "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    return;
+            }
+
+            ResetSiteMap("2016SP1");
         }
 
         private void ResetSiteMap(object version)
@@ -908,11 +935,27 @@ namespace MsCrmTools.SiteMapEditor
                 Work = (bw, e) =>
                 {
                     var qe = new QueryExpression("sitemap");
-                    qe.ColumnSet = new ColumnSet(true);
+                    qe.ColumnSet = new ColumnSet("sitemapxml", "isappaware",  "sitemapnameunique");
 
                     EntityCollection ec = Service.RetrieveMultiple(qe);
 
-                    siteMap = ec[0];
+                    if (ec.Entities.Count > 1)
+                    {
+                        var smp = new SiteMapPicker(ec);
+                        if (smp.ShowDialog(this) == DialogResult.OK)
+                        {
+                            siteMap = smp.SelectedSitemap;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        siteMap = ec[0];
+                    }
+
                     siteMapDoc = new XmlDocument();
                     siteMapDoc.LoadXml(ec[0]["sitemapxml"].ToString());
                 },
@@ -1143,5 +1186,12 @@ namespace MsCrmTools.SiteMapEditor
         {
             CloseTool();
         }
+
+        private void llHidePnlInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ((LinkLabel) sender).Parent.Visible = false;
+        }
+
+      
     }
 }
