@@ -319,6 +319,9 @@
     <EmbeddedResource Include="Resources\sitemap2016.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\sitemap2016SP1.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
