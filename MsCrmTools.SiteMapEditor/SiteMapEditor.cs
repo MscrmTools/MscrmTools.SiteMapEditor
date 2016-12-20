@@ -768,6 +768,12 @@ namespace MsCrmTools.SiteMapEditor
                         else
                             version = "2015SP1";
                         break;
+                    case 8:
+                        if (ConnectionDetail.OrganizationMinorVersion == 0)
+                            version = "2016";
+                        else
+                            version = "2016SP1";
+                        break;
                 }
 
                 var smcPicker = new SiteMapComponentPicker(nodeText, version);
