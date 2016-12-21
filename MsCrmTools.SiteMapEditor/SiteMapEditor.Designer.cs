@@ -47,6 +47,7 @@
             this.resetCRM2015SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCRM2015Update1SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nodeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addSystemAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSystemGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,8 +69,6 @@
             this.disableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeviewMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addRuleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.pnlInfo = new System.Windows.Forms.Panel();
             this.lblInfo = new System.Windows.Forms.Label();
@@ -89,10 +88,9 @@
             this.toolStripButtonAddXml = new System.Windows.Forms.ToolStripButton();
             this.tvSiteMap = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMain.SuspendLayout();
             this.nodeMenu.SuspendLayout();
-            this.treeviewMenuStrip.SuspendLayout();
             this.pnlInfo.SuspendLayout();
             this.gbProperties.SuspendLayout();
             this.toolStripItem.SuspendLayout();
@@ -202,7 +200,8 @@
             this.resetCRM2015SiteMapToDefaultToolStripMenuItem,
             this.resetCRM2015Update1SiteMapToDefaultToolStripMenuItem,
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem,
-            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem});
+            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem,
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem});
             this.toolStripDropDownButtonMoreActions.Enabled = false;
             this.toolStripDropDownButtonMoreActions.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonMoreActions.Image")));
             this.toolStripDropDownButtonMoreActions.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -259,6 +258,13 @@
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem.Text = "Reset CRM 2016 SiteMap to default";
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetCRM2016SiteMapToDefaultToolStripMenuItem_Click);
+            // 
+            // resetCRM2016SP1SiteMapToDefaultToolStripMenuItem
+            // 
+            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Name = "resetCRM2016SP1SiteMapToDefaultToolStripMenuItem";
+            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
+            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Text = "Reset CRM 2016 SP1 SiteMap to default";
+            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem_Click);
             // 
             // nodeMenu
             // 
@@ -412,20 +418,6 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Visible = false;
             // 
-            // treeviewMenuStrip
-            // 
-            this.treeviewMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addRuleToolStripMenuItem});
-            this.treeviewMenuStrip.Name = "treeviewMenuStrip";
-            this.treeviewMenuStrip.Size = new System.Drawing.Size(212, 67);
-            // 
-            // addRuleToolStripMenuItem
-            // 
-            this.addRuleToolStripMenuItem.Name = "addRuleToolStripMenuItem";
-            this.addRuleToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
-            this.addRuleToolStripMenuItem.Tag = "AddRule";
-            this.addRuleToolStripMenuItem.Text = "Add Rule";
-            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -450,7 +442,7 @@
             this.lblInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblInfo.Location = new System.Drawing.Point(0, 0);
             this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Size = new System.Drawing.Size(1263, 52);
+            this.lblInfo.Size = new System.Drawing.Size(1322, 52);
             this.lblInfo.TabIndex = 2;
             this.lblInfo.Text = "[lblInfo]";
             // 
@@ -458,12 +450,12 @@
             // 
             this.llHidePnlInfo.AutoSize = true;
             this.llHidePnlInfo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.llHidePnlInfo.Location = new System.Drawing.Point(1263, 0);
+            this.llHidePnlInfo.Location = new System.Drawing.Point(1322, 0);
             this.llHidePnlInfo.Name = "llHidePnlInfo";
-            this.llHidePnlInfo.Size = new System.Drawing.Size(101, 20);
+            this.llHidePnlInfo.Size = new System.Drawing.Size(42, 20);
             this.llHidePnlInfo.TabIndex = 1;
             this.llHidePnlInfo.TabStop = true;
-            this.llHidePnlInfo.Text = "Hide this info";
+            this.llHidePnlInfo.Text = "Hide";
             this.llHidePnlInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llHidePnlInfo_LinkClicked);
             // 
             // gbProperties
@@ -649,12 +641,12 @@
             this.splitContainer1.SplitterDistance = 640;
             this.splitContainer1.TabIndex = 25;
             // 
-            // resetCRM2016SP1SiteMapToDefaultToolStripMenuItem
+            // resetDynamics36582SiteMapToDefaultToolStripMenuItem
             // 
-            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Name = "resetCRM2016SP1SiteMapToDefaultToolStripMenuItem";
-            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
-            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Text = "Reset CRM 2016 SP1 SiteMap to default";
-            this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem_Click);
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Name = "resetDynamics36582SiteMapToDefaultToolStripMenuItem";
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Text = "Reset Dynamics 365 (8.2) SiteMap to default";
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetDynamics36582SiteMapToDefaultToolStripMenuItem_Click);
             // 
             // SiteMapEditor
             // 
@@ -669,7 +661,6 @@
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
             this.nodeMenu.ResumeLayout(false);
-            this.treeviewMenuStrip.ResumeLayout(false);
             this.pnlInfo.ResumeLayout(false);
             this.pnlInfo.PerformLayout();
             this.gbProperties.ResumeLayout(false);
@@ -717,8 +708,6 @@
         internal System.Windows.Forms.ToolStripMenuItem disableToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         internal System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip treeviewMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem addRuleToolStripMenuItem;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ToolStripButton tsbCloseThisTab;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -747,5 +736,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.ToolStripMenuItem resetCRM2016SP1SiteMapToDefaultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetDynamics36582SiteMapToDefaultToolStripMenuItem;
     }
 }

@@ -65,17 +65,29 @@ namespace MsCrmTools.SiteMapEditor
 
             Load += (sender, e) =>
             {
-                if (ConnectionDetail != null
-                    && ConnectionDetail.OrganizationMajorVersion == 8
-                    && ConnectionDetail.OrganizationMinorVersion == 2
-                    )
-                {
-                    lblInfo.Text =
-                        "Editing Microsoft Dynamics 365 Apps Sitemaps is currently not possible due to SDK limitations. If you need to edit this kind of Sitemap, please use the integrated Sitemap designer in Microsoft Dynamics 365";
-
-                    pnlInfo.Visible = true;
-                }
+                AddDynamics365Notification();
             };
+        }
+
+        public override void UpdateConnection(IOrganizationService newService, ConnectionDetail detail, string actionName, object parameter)
+        {
+            base.UpdateConnection(newService, detail, actionName, parameter);
+
+            AddDynamics365Notification();
+        }
+
+        private void AddDynamics365Notification()
+        {
+            if (ConnectionDetail != null
+                && ConnectionDetail.OrganizationMajorVersion == 8
+                && ConnectionDetail.OrganizationMinorVersion == 2
+                )
+            {
+                lblInfo.Text =
+                    "Editing Microsoft Dynamics 365 Apps Sitemaps is currently not possible due to SDK limitations. If you need to edit this kind of Sitemap, please use the integrated Sitemap designer in Microsoft Dynamics 365";
+
+                pnlInfo.Visible = true;
+            }
         }
 
         #region Main ToolStrip Menu
@@ -145,6 +157,19 @@ namespace MsCrmTools.SiteMapEditor
             }
 
             ResetSiteMap("2016SP1");
+        }
+
+        private void resetDynamics36582SiteMapToDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ConnectionDetail.OrganizationMajorVersion != 8 || ConnectionDetail.OrganizationMajorVersion == 8 && ConnectionDetail.OrganizationMinorVersion != 2)
+            {
+                if (DialogResult.No == MessageBox.Show(this,
+                    "Your current organization is not a Dynamics 365 (8.2) organization! Are you sure you want to continue?",
+                    "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    return;
+            }
+
+            ResetSiteMap("8.2");
         }
 
         private void ResetSiteMap(object version)
@@ -771,8 +796,10 @@ namespace MsCrmTools.SiteMapEditor
                     case 8:
                         if (ConnectionDetail.OrganizationMinorVersion == 0)
                             version = "2016";
-                        else
+                        else if (ConnectionDetail.OrganizationMinorVersion == 1)
                             version = "2016SP1";
+                        else
+                            version = "8.2";
                         break;
                 }
 
@@ -941,7 +968,15 @@ namespace MsCrmTools.SiteMapEditor
                 Work = (bw, e) =>
                 {
                     var qe = new QueryExpression("sitemap");
-                    qe.ColumnSet = new ColumnSet("sitemapxml", "isappaware",  "sitemapnameunique");
+
+                    if (new Version(ConnectionDetail.OrganizationVersion) >= new Version(8, 2, 0, 0))
+                    {
+                        qe.ColumnSet = new ColumnSet("sitemapxml", "isappaware", "sitemapnameunique");
+                    }
+                    else
+                    {
+                        qe.ColumnSet = new ColumnSet(true);
+                    }
 
                     EntityCollection ec = Service.RetrieveMultiple(qe);
 
@@ -967,6 +1002,12 @@ namespace MsCrmTools.SiteMapEditor
                 },
                 PostWorkCallBack = e =>
                 {
+                    if (e.Error != null)
+                    {
+                        MessageBox.Show(this, e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                     DisplaySiteMap();
                     EnableControls(true);
                     LoadCrmItems();
@@ -1198,6 +1239,6 @@ namespace MsCrmTools.SiteMapEditor
             ((LinkLabel) sender).Parent.Visible = false;
         }
 
-      
+       
     }
 }
