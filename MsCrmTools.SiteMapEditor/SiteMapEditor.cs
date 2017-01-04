@@ -631,6 +631,7 @@ namespace MsCrmTools.SiteMapEditor
                     {
                         var ctrl = new SiteMapControl(collec);
                         ctrl.Saved += CtrlSaved;
+                        ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
@@ -644,6 +645,7 @@ namespace MsCrmTools.SiteMapEditor
                         if (collec.Count == 0) collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
                         var ctrl = new AreaControl(collec, webResourcesImageCache, webResourcesHtmlCache, Service);
                         ctrl.Saved += CtrlSaved;
+                        ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
@@ -658,6 +660,7 @@ namespace MsCrmTools.SiteMapEditor
                         var ctrl = new SubAreaControl(collec, entityCache, webResourcesImageCache, webResourcesHtmlCache,
                             Service);
                         ctrl.Saved += CtrlSaved;
+                        ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
@@ -671,6 +674,7 @@ namespace MsCrmTools.SiteMapEditor
                         if (collec.Count == 0) collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
                         var ctrl = new GroupControl(collec);
                         ctrl.Saved += CtrlSaved;
+                        ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
@@ -683,6 +687,7 @@ namespace MsCrmTools.SiteMapEditor
                     {
                         var ctrl = new PrivilegeControl(collec);
                         ctrl.Saved += CtrlSaved;
+                        ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
@@ -695,6 +700,7 @@ namespace MsCrmTools.SiteMapEditor
                     {
                         var ctrl = new DescriptionControl(collec);
                         ctrl.Saved += CtrlSaved;
+                        ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
@@ -707,6 +713,7 @@ namespace MsCrmTools.SiteMapEditor
                     {
                         var ctrl = new TitleControl(collec);
                         ctrl.Saved += CtrlSaved;
+                        ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();

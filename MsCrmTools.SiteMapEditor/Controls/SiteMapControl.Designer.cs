@@ -31,39 +31,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtSiteMapUrl = new System.Windows.Forms.TextBox();
-            lblSiteMapUrl = new System.Windows.Forms.Label();
-            SuspendLayout();
+            this.txtSiteMapUrl = new System.Windows.Forms.TextBox();
+            this.lblSiteMapUrl = new System.Windows.Forms.Label();
+            this.SuspendLayout();
             // 
             // txtSiteMapUrl
             // 
-            txtSiteMapUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtSiteMapUrl.Location = new System.Drawing.Point(210, 3);
-            txtSiteMapUrl.Name = "txtSiteMapUrl";
-            txtSiteMapUrl.Size = new System.Drawing.Size(280, 22);
-            txtSiteMapUrl.TabIndex = 8;
+            this.txtSiteMapUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSiteMapUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSiteMapUrl.Location = new System.Drawing.Point(315, 5);
+            this.txtSiteMapUrl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtSiteMapUrl.Name = "txtSiteMapUrl";
+            this.txtSiteMapUrl.Size = new System.Drawing.Size(418, 29);
+            this.txtSiteMapUrl.TabIndex = 8;
             // 
             // lblSiteMapUrl
             // 
-            lblSiteMapUrl.AutoSize = true;
-            lblSiteMapUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblSiteMapUrl.Location = new System.Drawing.Point(3, 6);
-            lblSiteMapUrl.Name = "lblSiteMapUrl";
-            lblSiteMapUrl.Size = new System.Drawing.Size(22, 13);
-            lblSiteMapUrl.TabIndex = 7;
-            lblSiteMapUrl.Text = "Url";
+            this.lblSiteMapUrl.AutoSize = true;
+            this.lblSiteMapUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSiteMapUrl.Location = new System.Drawing.Point(4, 9);
+            this.lblSiteMapUrl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSiteMapUrl.Name = "lblSiteMapUrl";
+            this.lblSiteMapUrl.Size = new System.Drawing.Size(32, 23);
+            this.lblSiteMapUrl.TabIndex = 7;
+            this.lblSiteMapUrl.Text = "Url";
             // 
             // SiteMapControl
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            Controls.Add(txtSiteMapUrl);
-            Controls.Add(lblSiteMapUrl);
-            Name = "SiteMapControl";
-            Size = new System.Drawing.Size(500, 400);
-            Leave += new System.EventHandler(SiteMapControl_Leave);
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.txtSiteMapUrl);
+            this.Controls.Add(this.lblSiteMapUrl);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "SiteMapControl";
+            this.Size = new System.Drawing.Size(750, 615);
+            this.Leave += new System.EventHandler(this.SiteMapControl_Leave);
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

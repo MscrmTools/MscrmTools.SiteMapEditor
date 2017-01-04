@@ -48,6 +48,7 @@
             this.resetCRM2015Update1SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nodeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addSystemAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSystemGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +77,6 @@
             this.gbProperties = new System.Windows.Forms.GroupBox();
             this.toolStripItem = new System.Windows.Forms.ToolStrip();
             this.tsbItemSave = new System.Windows.Forms.ToolStripButton();
-            this.panelContainer = new System.Windows.Forms.Panel();
             this.gbSiteMap = new System.Windows.Forms.GroupBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonMoveDown = new System.Windows.Forms.ToolStripButton();
@@ -88,7 +88,7 @@
             this.toolStripButtonAddXml = new System.Windows.Forms.ToolStripButton();
             this.tvSiteMap = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelContainer = new System.Windows.Forms.Panel();
             this.toolStripMain.SuspendLayout();
             this.nodeMenu.SuspendLayout();
             this.pnlInfo.SuspendLayout();
@@ -265,6 +265,13 @@
             this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
             this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Text = "Reset CRM 2016 SP1 SiteMap to default";
             this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem_Click);
+            // 
+            // resetDynamics36582SiteMapToDefaultToolStripMenuItem
+            // 
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Name = "resetDynamics36582SiteMapToDefaultToolStripMenuItem";
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Text = "Reset Dynamics 365 (8.2) SiteMap to default";
+            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetDynamics36582SiteMapToDefaultToolStripMenuItem_Click);
             // 
             // nodeMenu
             // 
@@ -460,8 +467,8 @@
             // 
             // gbProperties
             // 
-            this.gbProperties.Controls.Add(this.toolStripItem);
             this.gbProperties.Controls.Add(this.panelContainer);
+            this.gbProperties.Controls.Add(this.toolStripItem);
             this.gbProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbProperties.Location = new System.Drawing.Point(0, 0);
             this.gbProperties.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -474,16 +481,13 @@
             // 
             // toolStripItem
             // 
-            this.toolStripItem.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.toolStripItem.AutoSize = false;
-            this.toolStripItem.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStripItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbItemSave});
-            this.toolStripItem.Location = new System.Drawing.Point(9, 25);
+            this.toolStripItem.Location = new System.Drawing.Point(4, 24);
             this.toolStripItem.Name = "toolStripItem";
             this.toolStripItem.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripItem.Size = new System.Drawing.Size(705, 38);
+            this.toolStripItem.Size = new System.Drawing.Size(714, 38);
             this.toolStripItem.TabIndex = 9;
             this.toolStripItem.Text = "toolStrip2";
             // 
@@ -497,15 +501,6 @@
             this.tsbItemSave.Text = "Save";
             this.tsbItemSave.ToolTipText = "Save the current configuration to the selected node";
             this.tsbItemSave.Click += new System.EventHandler(this.TsbItemSaveClick);
-            // 
-            // panelContainer
-            // 
-            this.panelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContainer.Location = new System.Drawing.Point(4, 24);
-            this.panelContainer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.panelContainer.Name = "panelContainer";
-            this.panelContainer.Size = new System.Drawing.Size(714, 802);
-            this.panelContainer.TabIndex = 14;
             // 
             // gbSiteMap
             // 
@@ -623,6 +618,7 @@
             this.tvSiteMap.Size = new System.Drawing.Size(620, 752);
             this.tvSiteMap.TabIndex = 0;
             this.tvSiteMap.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvSiteMapAfterSelect);
+            this.tvSiteMap.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvSiteMapNodeMouseClick);
             // 
             // splitContainer1
             // 
@@ -641,12 +637,14 @@
             this.splitContainer1.SplitterDistance = 640;
             this.splitContainer1.TabIndex = 25;
             // 
-            // resetDynamics36582SiteMapToDefaultToolStripMenuItem
+            // panelContainer
             // 
-            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Name = "resetDynamics36582SiteMapToDefaultToolStripMenuItem";
-            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(457, 30);
-            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Text = "Reset Dynamics 365 (8.2) SiteMap to default";
-            this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetDynamics36582SiteMapToDefaultToolStripMenuItem_Click);
+            this.panelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelContainer.Location = new System.Drawing.Point(4, 62);
+            this.panelContainer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panelContainer.Name = "panelContainer";
+            this.panelContainer.Size = new System.Drawing.Size(714, 764);
+            this.panelContainer.TabIndex = 15;
             // 
             // SiteMapEditor
             // 
@@ -721,7 +719,6 @@
         internal System.Windows.Forms.GroupBox gbProperties;
         internal System.Windows.Forms.ToolStrip toolStripItem;
         internal System.Windows.Forms.ToolStripButton tsbItemSave;
-        internal System.Windows.Forms.Panel panelContainer;
         internal System.Windows.Forms.GroupBox gbSiteMap;
         internal System.Windows.Forms.ToolStrip toolStrip1;
         internal System.Windows.Forms.ToolStripButton toolStripButtonMoveDown;
@@ -737,5 +734,6 @@
         private System.Windows.Forms.Label lblInfo;
         private System.Windows.Forms.ToolStripMenuItem resetCRM2016SP1SiteMapToDefaultToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetDynamics36582SiteMapToDefaultToolStripMenuItem;
+        internal System.Windows.Forms.Panel panelContainer;
     }
 }

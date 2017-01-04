@@ -31,260 +31,302 @@
         /// </summary>
         private void InitializeComponent()
         {
-            chkAreaShowGroups = new System.Windows.Forms.CheckBox();
-            txtAreaId = new System.Windows.Forms.TextBox();
-            txtAreaUrl = new System.Windows.Forms.TextBox();
-            txtAreaIcon = new System.Windows.Forms.TextBox();
-            lblAreaId = new System.Windows.Forms.Label();
-            lblAreaUrl = new System.Windows.Forms.Label();
-            lblAreaShowGroups = new System.Windows.Forms.Label();
-            lblAreaIcon = new System.Windows.Forms.Label();
-            txtAreaResourceId = new System.Windows.Forms.TextBox();
-            txtAreaDescriptionResourceId = new System.Windows.Forms.TextBox();
-            lblAreaResourceId = new System.Windows.Forms.Label();
-            lblAreaDescriptionResourceId = new System.Windows.Forms.Label();
-            lblRequired = new System.Windows.Forms.Label();
-            btnBrowsIcon = new System.Windows.Forms.Button();
-            buttonBrowseUrl = new System.Windows.Forms.Button();
-            label1 = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
-            label3 = new System.Windows.Forms.Label();
-            txtAreaTitle = new System.Windows.Forms.TextBox();
-            txtAreaDescription = new System.Windows.Forms.TextBox();
-            panel1 = new System.Windows.Forms.Panel();
-            SuspendLayout();
+            this.chkAreaShowGroups = new System.Windows.Forms.CheckBox();
+            this.txtAreaId = new System.Windows.Forms.TextBox();
+            this.txtAreaUrl = new System.Windows.Forms.TextBox();
+            this.txtAreaIcon = new System.Windows.Forms.TextBox();
+            this.lblAreaId = new System.Windows.Forms.Label();
+            this.lblAreaUrl = new System.Windows.Forms.Label();
+            this.lblAreaShowGroups = new System.Windows.Forms.Label();
+            this.lblAreaIcon = new System.Windows.Forms.Label();
+            this.txtAreaResourceId = new System.Windows.Forms.TextBox();
+            this.txtAreaDescriptionResourceId = new System.Windows.Forms.TextBox();
+            this.lblAreaResourceId = new System.Windows.Forms.Label();
+            this.lblAreaDescriptionResourceId = new System.Windows.Forms.Label();
+            this.lblRequired = new System.Windows.Forms.Label();
+            this.btnBrowsIcon = new System.Windows.Forms.Button();
+            this.buttonBrowseUrl = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtAreaTitle = new System.Windows.Forms.TextBox();
+            this.txtAreaDescription = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.SuspendLayout();
             // 
             // chkAreaShowGroups
             // 
-            chkAreaShowGroups.AutoSize = true;
-            chkAreaShowGroups.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chkAreaShowGroups.Location = new System.Drawing.Point(211, 83);
-            chkAreaShowGroups.Name = "chkAreaShowGroups";
-            chkAreaShowGroups.Size = new System.Drawing.Size(15, 14);
-            chkAreaShowGroups.TabIndex = 15;
-            chkAreaShowGroups.UseVisualStyleBackColor = true;
+            this.chkAreaShowGroups.AutoSize = true;
+            this.chkAreaShowGroups.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkAreaShowGroups.Location = new System.Drawing.Point(316, 128);
+            this.chkAreaShowGroups.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.chkAreaShowGroups.Name = "chkAreaShowGroups";
+            this.chkAreaShowGroups.Size = new System.Drawing.Size(22, 21);
+            this.chkAreaShowGroups.TabIndex = 15;
+            this.chkAreaShowGroups.UseVisualStyleBackColor = true;
             // 
             // txtAreaId
             // 
-            txtAreaId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAreaId.Location = new System.Drawing.Point(210, 3);
-            txtAreaId.Name = "txtAreaId";
-            txtAreaId.Size = new System.Drawing.Size(280, 22);
-            txtAreaId.TabIndex = 14;
+            this.txtAreaId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAreaId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAreaId.Location = new System.Drawing.Point(315, 5);
+            this.txtAreaId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAreaId.Name = "txtAreaId";
+            this.txtAreaId.Size = new System.Drawing.Size(418, 29);
+            this.txtAreaId.TabIndex = 14;
             // 
             // txtAreaUrl
             // 
-            txtAreaUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAreaUrl.Location = new System.Drawing.Point(210, 55);
-            txtAreaUrl.Name = "txtAreaUrl";
-            txtAreaUrl.Size = new System.Drawing.Size(234, 22);
-            txtAreaUrl.TabIndex = 13;
+            this.txtAreaUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAreaUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAreaUrl.Location = new System.Drawing.Point(315, 85);
+            this.txtAreaUrl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAreaUrl.Name = "txtAreaUrl";
+            this.txtAreaUrl.Size = new System.Drawing.Size(349, 29);
+            this.txtAreaUrl.TabIndex = 13;
             // 
             // txtAreaIcon
             // 
-            txtAreaIcon.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAreaIcon.Location = new System.Drawing.Point(210, 29);
-            txtAreaIcon.Name = "txtAreaIcon";
-            txtAreaIcon.Size = new System.Drawing.Size(234, 22);
-            txtAreaIcon.TabIndex = 12;
+            this.txtAreaIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAreaIcon.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAreaIcon.Location = new System.Drawing.Point(315, 45);
+            this.txtAreaIcon.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAreaIcon.Name = "txtAreaIcon";
+            this.txtAreaIcon.Size = new System.Drawing.Size(349, 29);
+            this.txtAreaIcon.TabIndex = 12;
             // 
             // lblAreaId
             // 
-            lblAreaId.AutoSize = true;
-            lblAreaId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblAreaId.ForeColor = System.Drawing.Color.Black;
-            lblAreaId.Location = new System.Drawing.Point(3, 6);
-            lblAreaId.Name = "lblAreaId";
-            lblAreaId.Size = new System.Drawing.Size(17, 13);
-            lblAreaId.TabIndex = 11;
-            lblAreaId.Text = "Id";
+            this.lblAreaId.AutoSize = true;
+            this.lblAreaId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAreaId.ForeColor = System.Drawing.Color.Black;
+            this.lblAreaId.Location = new System.Drawing.Point(4, 9);
+            this.lblAreaId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAreaId.Name = "lblAreaId";
+            this.lblAreaId.Size = new System.Drawing.Size(25, 23);
+            this.lblAreaId.TabIndex = 11;
+            this.lblAreaId.Text = "Id";
             // 
             // lblAreaUrl
             // 
-            lblAreaUrl.AutoSize = true;
-            lblAreaUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblAreaUrl.Location = new System.Drawing.Point(3, 58);
-            lblAreaUrl.Name = "lblAreaUrl";
-            lblAreaUrl.Size = new System.Drawing.Size(22, 13);
-            lblAreaUrl.TabIndex = 10;
-            lblAreaUrl.Text = "Url";
+            this.lblAreaUrl.AutoSize = true;
+            this.lblAreaUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAreaUrl.Location = new System.Drawing.Point(4, 89);
+            this.lblAreaUrl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAreaUrl.Name = "lblAreaUrl";
+            this.lblAreaUrl.Size = new System.Drawing.Size(32, 23);
+            this.lblAreaUrl.TabIndex = 10;
+            this.lblAreaUrl.Text = "Url";
             // 
             // lblAreaShowGroups
             // 
-            lblAreaShowGroups.AutoSize = true;
-            lblAreaShowGroups.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblAreaShowGroups.Location = new System.Drawing.Point(3, 83);
-            lblAreaShowGroups.Name = "lblAreaShowGroups";
-            lblAreaShowGroups.Size = new System.Drawing.Size(77, 13);
-            lblAreaShowGroups.TabIndex = 9;
-            lblAreaShowGroups.Text = "Show Groups";
+            this.lblAreaShowGroups.AutoSize = true;
+            this.lblAreaShowGroups.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAreaShowGroups.Location = new System.Drawing.Point(4, 128);
+            this.lblAreaShowGroups.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAreaShowGroups.Name = "lblAreaShowGroups";
+            this.lblAreaShowGroups.Size = new System.Drawing.Size(111, 23);
+            this.lblAreaShowGroups.TabIndex = 9;
+            this.lblAreaShowGroups.Text = "Show Groups";
             // 
             // lblAreaIcon
             // 
-            lblAreaIcon.AutoSize = true;
-            lblAreaIcon.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblAreaIcon.Location = new System.Drawing.Point(3, 32);
-            lblAreaIcon.Name = "lblAreaIcon";
-            lblAreaIcon.Size = new System.Drawing.Size(29, 13);
-            lblAreaIcon.TabIndex = 8;
-            lblAreaIcon.Text = "Icon";
+            this.lblAreaIcon.AutoSize = true;
+            this.lblAreaIcon.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAreaIcon.Location = new System.Drawing.Point(4, 49);
+            this.lblAreaIcon.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAreaIcon.Name = "lblAreaIcon";
+            this.lblAreaIcon.Size = new System.Drawing.Size(43, 23);
+            this.lblAreaIcon.TabIndex = 8;
+            this.lblAreaIcon.Text = "Icon";
             // 
             // txtAreaResourceId
             // 
-            txtAreaResourceId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAreaResourceId.Location = new System.Drawing.Point(210, 102);
-            txtAreaResourceId.Name = "txtAreaResourceId";
-            txtAreaResourceId.ReadOnly = true;
-            txtAreaResourceId.Size = new System.Drawing.Size(280, 22);
-            txtAreaResourceId.TabIndex = 21;
+            this.txtAreaResourceId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAreaResourceId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAreaResourceId.Location = new System.Drawing.Point(315, 157);
+            this.txtAreaResourceId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAreaResourceId.Name = "txtAreaResourceId";
+            this.txtAreaResourceId.ReadOnly = true;
+            this.txtAreaResourceId.Size = new System.Drawing.Size(418, 29);
+            this.txtAreaResourceId.TabIndex = 21;
             // 
             // txtAreaDescriptionResourceId
             // 
-            txtAreaDescriptionResourceId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAreaDescriptionResourceId.Location = new System.Drawing.Point(210, 128);
-            txtAreaDescriptionResourceId.Name = "txtAreaDescriptionResourceId";
-            txtAreaDescriptionResourceId.ReadOnly = true;
-            txtAreaDescriptionResourceId.Size = new System.Drawing.Size(280, 22);
-            txtAreaDescriptionResourceId.TabIndex = 20;
+            this.txtAreaDescriptionResourceId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAreaDescriptionResourceId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAreaDescriptionResourceId.Location = new System.Drawing.Point(315, 197);
+            this.txtAreaDescriptionResourceId.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAreaDescriptionResourceId.Name = "txtAreaDescriptionResourceId";
+            this.txtAreaDescriptionResourceId.ReadOnly = true;
+            this.txtAreaDescriptionResourceId.Size = new System.Drawing.Size(418, 29);
+            this.txtAreaDescriptionResourceId.TabIndex = 20;
             // 
             // lblAreaResourceId
             // 
-            lblAreaResourceId.AutoSize = true;
-            lblAreaResourceId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblAreaResourceId.Location = new System.Drawing.Point(3, 105);
-            lblAreaResourceId.Name = "lblAreaResourceId";
-            lblAreaResourceId.Size = new System.Drawing.Size(67, 13);
-            lblAreaResourceId.TabIndex = 19;
-            lblAreaResourceId.Text = "Resource Id";
+            this.lblAreaResourceId.AutoSize = true;
+            this.lblAreaResourceId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAreaResourceId.Location = new System.Drawing.Point(4, 162);
+            this.lblAreaResourceId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAreaResourceId.Name = "lblAreaResourceId";
+            this.lblAreaResourceId.Size = new System.Drawing.Size(99, 23);
+            this.lblAreaResourceId.TabIndex = 19;
+            this.lblAreaResourceId.Text = "Resource Id";
             // 
             // lblAreaDescriptionResourceId
             // 
-            lblAreaDescriptionResourceId.AutoSize = true;
-            lblAreaDescriptionResourceId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblAreaDescriptionResourceId.Location = new System.Drawing.Point(3, 131);
-            lblAreaDescriptionResourceId.Name = "lblAreaDescriptionResourceId";
-            lblAreaDescriptionResourceId.Size = new System.Drawing.Size(129, 13);
-            lblAreaDescriptionResourceId.TabIndex = 18;
-            lblAreaDescriptionResourceId.Text = "Description Resource Id";
+            this.lblAreaDescriptionResourceId.AutoSize = true;
+            this.lblAreaDescriptionResourceId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAreaDescriptionResourceId.Location = new System.Drawing.Point(4, 202);
+            this.lblAreaDescriptionResourceId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAreaDescriptionResourceId.Name = "lblAreaDescriptionResourceId";
+            this.lblAreaDescriptionResourceId.Size = new System.Drawing.Size(190, 23);
+            this.lblAreaDescriptionResourceId.TabIndex = 18;
+            this.lblAreaDescriptionResourceId.Text = "Description Resource Id";
             // 
             // lblRequired
             // 
-            lblRequired.AutoSize = true;
-            lblRequired.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblRequired.ForeColor = System.Drawing.Color.Red;
-            lblRequired.Location = new System.Drawing.Point(18, 6);
-            lblRequired.Name = "lblRequired";
-            lblRequired.Size = new System.Drawing.Size(12, 13);
-            lblRequired.TabIndex = 22;
-            lblRequired.Text = "*";
+            this.lblRequired.AutoSize = true;
+            this.lblRequired.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRequired.ForeColor = System.Drawing.Color.Red;
+            this.lblRequired.Location = new System.Drawing.Point(27, 9);
+            this.lblRequired.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRequired.Name = "lblRequired";
+            this.lblRequired.Size = new System.Drawing.Size(17, 23);
+            this.lblRequired.TabIndex = 22;
+            this.lblRequired.Text = "*";
             // 
             // btnBrowsIcon
             // 
-            btnBrowsIcon.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            btnBrowsIcon.Location = new System.Drawing.Point(450, 29);
-            btnBrowsIcon.Name = "btnBrowsIcon";
-            btnBrowsIcon.Size = new System.Drawing.Size(40, 23);
-            btnBrowsIcon.TabIndex = 78;
-            btnBrowsIcon.Text = "...";
-            btnBrowsIcon.UseVisualStyleBackColor = true;
-            btnBrowsIcon.Click += new System.EventHandler(btnBrowsIcon_Click);
+            this.btnBrowsIcon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowsIcon.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBrowsIcon.Location = new System.Drawing.Point(675, 45);
+            this.btnBrowsIcon.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnBrowsIcon.Name = "btnBrowsIcon";
+            this.btnBrowsIcon.Size = new System.Drawing.Size(60, 35);
+            this.btnBrowsIcon.TabIndex = 78;
+            this.btnBrowsIcon.Text = "...";
+            this.btnBrowsIcon.UseVisualStyleBackColor = true;
+            this.btnBrowsIcon.Click += new System.EventHandler(this.btnBrowsIcon_Click);
             // 
             // buttonBrowseUrl
             // 
-            buttonBrowseUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            buttonBrowseUrl.Location = new System.Drawing.Point(450, 53);
-            buttonBrowseUrl.Name = "buttonBrowseUrl";
-            buttonBrowseUrl.Size = new System.Drawing.Size(40, 23);
-            buttonBrowseUrl.TabIndex = 79;
-            buttonBrowseUrl.Text = "...";
-            buttonBrowseUrl.UseVisualStyleBackColor = true;
-            buttonBrowseUrl.Click += new System.EventHandler(buttonBrowseUrl_Click);
+            this.buttonBrowseUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonBrowseUrl.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBrowseUrl.Location = new System.Drawing.Point(675, 82);
+            this.buttonBrowseUrl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonBrowseUrl.Name = "buttonBrowseUrl";
+            this.buttonBrowseUrl.Size = new System.Drawing.Size(60, 35);
+            this.buttonBrowseUrl.TabIndex = 79;
+            this.buttonBrowseUrl.Text = "...";
+            this.buttonBrowseUrl.UseVisualStyleBackColor = true;
+            this.buttonBrowseUrl.Click += new System.EventHandler(this.buttonBrowseUrl_Click);
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label1.Location = new System.Drawing.Point(3, 159);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(119, 13);
-            label1.TabIndex = 80;
-            label1.Text = "Deprecated attributes";
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(4, 245);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(176, 23);
+            this.label1.TabIndex = 80;
+            this.label1.Text = "Deprecated attributes";
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label2.Location = new System.Drawing.Point(3, 185);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(28, 13);
-            label2.TabIndex = 81;
-            label2.Text = "Title";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(4, 285);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 23);
+            this.label2.TabIndex = 81;
+            this.label2.Text = "Title";
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label3.Location = new System.Drawing.Point(3, 211);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(66, 13);
-            label3.TabIndex = 82;
-            label3.Text = "Description";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(4, 325);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(96, 23);
+            this.label3.TabIndex = 82;
+            this.label3.Text = "Description";
             // 
             // txtAreaTitle
             // 
-            txtAreaTitle.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAreaTitle.Location = new System.Drawing.Point(211, 182);
-            txtAreaTitle.Name = "txtAreaTitle";
-            txtAreaTitle.Size = new System.Drawing.Size(279, 22);
-            txtAreaTitle.TabIndex = 83;
+            this.txtAreaTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAreaTitle.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAreaTitle.Location = new System.Drawing.Point(316, 280);
+            this.txtAreaTitle.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAreaTitle.Name = "txtAreaTitle";
+            this.txtAreaTitle.Size = new System.Drawing.Size(416, 29);
+            this.txtAreaTitle.TabIndex = 83;
             // 
             // txtAreaDescription
             // 
-            txtAreaDescription.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            txtAreaDescription.Location = new System.Drawing.Point(210, 208);
-            txtAreaDescription.Name = "txtAreaDescription";
-            txtAreaDescription.Size = new System.Drawing.Size(280, 22);
-            txtAreaDescription.TabIndex = 84;
+            this.txtAreaDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAreaDescription.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAreaDescription.Location = new System.Drawing.Point(315, 320);
+            this.txtAreaDescription.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtAreaDescription.Name = "txtAreaDescription";
+            this.txtAreaDescription.Size = new System.Drawing.Size(418, 29);
+            this.txtAreaDescription.TabIndex = 84;
             // 
             // panel1
             // 
-            panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            panel1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            panel1.Location = new System.Drawing.Point(6, 174);
-            panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(490, 1);
-            panel1.TabIndex = 85;
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel1.Location = new System.Drawing.Point(9, 268);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(734, 0);
+            this.panel1.TabIndex = 85;
             // 
             // AreaControl
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            Controls.Add(panel1);
-            Controls.Add(txtAreaDescription);
-            Controls.Add(txtAreaTitle);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(buttonBrowseUrl);
-            Controls.Add(btnBrowsIcon);
-            Controls.Add(lblRequired);
-            Controls.Add(txtAreaResourceId);
-            Controls.Add(txtAreaDescriptionResourceId);
-            Controls.Add(lblAreaResourceId);
-            Controls.Add(lblAreaDescriptionResourceId);
-            Controls.Add(chkAreaShowGroups);
-            Controls.Add(txtAreaId);
-            Controls.Add(txtAreaUrl);
-            Controls.Add(txtAreaIcon);
-            Controls.Add(lblAreaId);
-            Controls.Add(lblAreaUrl);
-            Controls.Add(lblAreaShowGroups);
-            Controls.Add(lblAreaIcon);
-            Name = "AreaControl";
-            Size = new System.Drawing.Size(500, 400);
-            Leave += new System.EventHandler(SiteMapControl_Leave);
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.txtAreaDescription);
+            this.Controls.Add(this.txtAreaTitle);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.buttonBrowseUrl);
+            this.Controls.Add(this.btnBrowsIcon);
+            this.Controls.Add(this.lblRequired);
+            this.Controls.Add(this.txtAreaResourceId);
+            this.Controls.Add(this.txtAreaDescriptionResourceId);
+            this.Controls.Add(this.lblAreaResourceId);
+            this.Controls.Add(this.lblAreaDescriptionResourceId);
+            this.Controls.Add(this.chkAreaShowGroups);
+            this.Controls.Add(this.txtAreaId);
+            this.Controls.Add(this.txtAreaUrl);
+            this.Controls.Add(this.txtAreaIcon);
+            this.Controls.Add(this.lblAreaId);
+            this.Controls.Add(this.lblAreaUrl);
+            this.Controls.Add(this.lblAreaShowGroups);
+            this.Controls.Add(this.lblAreaIcon);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "AreaControl";
+            this.Size = new System.Drawing.Size(750, 615);
+            this.Leave += new System.EventHandler(this.SiteMapControl_Leave);
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
