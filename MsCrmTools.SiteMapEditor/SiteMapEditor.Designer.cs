@@ -619,6 +619,7 @@
             this.tvSiteMap.TabIndex = 0;
             this.tvSiteMap.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TvSiteMapAfterSelect);
             this.tvSiteMap.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TvSiteMapNodeMouseClick);
+            this.tvSiteMap.KeyDown += TvSiteMapKeyDown;           
             // 
             // splitContainer1
             // 
