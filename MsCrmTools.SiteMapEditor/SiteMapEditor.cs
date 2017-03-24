@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
@@ -34,6 +35,7 @@ namespace MsCrmTools.SiteMapEditor
         internal List<Entity> webResourcesImageCache;
         private Entity siteMap;
         private XmlDocument siteMapDoc;
+
 
         public string RepositoryName
         {
@@ -62,32 +64,6 @@ namespace MsCrmTools.SiteMapEditor
         public SiteMapEditor()
         {
             InitializeComponent();
-
-            Load += (sender, e) =>
-            {
-                AddDynamics365Notification();
-            };
-        }
-
-        public override void UpdateConnection(IOrganizationService newService, ConnectionDetail detail, string actionName, object parameter)
-        {
-            base.UpdateConnection(newService, detail, actionName, parameter);
-
-            AddDynamics365Notification();
-        }
-
-        private void AddDynamics365Notification()
-        {
-            if (ConnectionDetail != null
-                && ConnectionDetail.OrganizationMajorVersion == 8
-                && ConnectionDetail.OrganizationMinorVersion == 2
-                )
-            {
-                lblInfo.Text =
-                    "Editing Microsoft Dynamics 365 Apps Sitemaps is currently not possible due to SDK limitations. If you need to edit this kind of Sitemap, please use the integrated Sitemap designer in Microsoft Dynamics 365";
-
-                pnlInfo.Visible = true;
-            }
         }
 
         #region Main ToolStrip Menu
@@ -974,38 +950,68 @@ namespace MsCrmTools.SiteMapEditor
                 Message = "Loading SiteMap...",
                 Work = (bw, e) =>
                 {
-                    var qe = new QueryExpression("sitemap");
-
                     if (new Version(ConnectionDetail.OrganizationVersion) >= new Version(8, 2, 0, 0))
                     {
-                        qe.ColumnSet = new ColumnSet("sitemapxml", "isappaware", "sitemapnameunique");
-                    }
-                    else
-                    {
-                        qe.ColumnSet = new ColumnSet(true);
-                    }
-
-                    EntityCollection ec = Service.RetrieveMultiple(qe);
-
-                    if (ec.Entities.Count > 1)
-                    {
-                        var smp = new SiteMapPicker(ec);
-                        if (smp.ShowDialog(this) == DialogResult.OK)
+                        var sitemapsIds = Service.RetrieveMultiple(new QueryExpression("appmodulecomponent")
                         {
-                            siteMap = smp.SelectedSitemap;
+                            ColumnSet = new ColumnSet(true),
+                            Criteria = new FilterExpression
+                            {
+                                Conditions =
+                                {
+                                    new ConditionExpression("componenttype", ConditionOperator.Equal, 62)
+                                }
+                            }
+                        });
+
+                        var ec = new EntityCollection();
+
+                        foreach (var siteMapId in sitemapsIds.Entities)
+                        {
+                            try
+                            {
+                                var tmpSiteMap = Service.Retrieve("sitemap",
+                                    siteMapId.GetAttributeValue<Guid>("objectid"), new ColumnSet(true));
+                                tmpSiteMap["name"] =
+                                    siteMapId.GetAttributeValue<EntityReference>("appmoduleidunique").Name ?? "Default";
+                                ec.Entities.Add(tmpSiteMap);
+                            }
+                            catch(Exception error)
+                            {
+                                LogError($"Error while retrieving SiteMap for app {siteMapId.GetAttributeValue<EntityReference>("appmoduleidunique").Name ?? "Default"}:{error.Message}");
+                            }
+                        }
+
+
+                        if (ec.Entities.Count > 1)
+                        {
+                            var smp = new SiteMapPicker(ec);
+                            if (smp.ShowDialog(this) == DialogResult.OK)
+                            {
+                                siteMap = smp.SelectedSitemap;
+                            }
+                            else
+                            {
+                                return;
+                            }
                         }
                         else
                         {
-                            return;
+                            siteMap = ec.Entities.First();
                         }
+
+                      
                     }
                     else
                     {
-                        siteMap = ec[0];
+                        var qe = new QueryExpression("sitemap");
+                        qe.ColumnSet = new ColumnSet(true);
+                        EntityCollection ec = Service.RetrieveMultiple(qe);
+                        siteMap = ec.Entities.First();
                     }
 
                     siteMapDoc = new XmlDocument();
-                    siteMapDoc.LoadXml(ec[0]["sitemapxml"].ToString());
+                    siteMapDoc.LoadXml(siteMap.GetAttributeValue<string>("sitemapxml"));
                 },
                 PostWorkCallBack = e =>
                 {
@@ -1061,7 +1067,7 @@ namespace MsCrmTools.SiteMapEditor
                     Service.Update(siteMap);
 
                     var request = new PublishXmlRequest();
-                    request.ParameterXml = "<importexportxml><sitemaps><sitemap></sitemap></sitemaps></importexportxml>";
+                    request.ParameterXml = $"<importexportxml><sitemaps><sitemap>{siteMap.Id}</sitemap></sitemaps></importexportxml>";
                     Service.Execute(request);
                 },
                 PostWorkCallBack = e =>

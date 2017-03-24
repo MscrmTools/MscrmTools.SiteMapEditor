@@ -33,8 +33,8 @@
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.lvSitemaps = new System.Windows.Forms.ListView();
             this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
+            this.btnComponentPickerCancel = new System.Windows.Forms.Button();
+            this.btnComponentPickerValidate = new System.Windows.Forms.Button();
             this.pnlHeader.SuspendLayout();
             this.pnlFooter.SuspendLayout();
             this.SuspendLayout();
@@ -61,8 +61,8 @@
             // 
             // pnlFooter
             // 
-            this.pnlFooter.Controls.Add(this.btnOK);
-            this.pnlFooter.Controls.Add(this.btnCancel);
+            this.pnlFooter.Controls.Add(this.btnComponentPickerCancel);
+            this.pnlFooter.Controls.Add(this.btnComponentPickerValidate);
             this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlFooter.Location = new System.Drawing.Point(0, 452);
             this.pnlFooter.Name = "pnlFooter";
@@ -91,25 +91,29 @@
             this.chName.Text = "Name";
             this.chName.Width = 200;
             // 
-            // btnCancel
+            // btnComponentPickerCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(721, 15);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 0;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnComponentPickerCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnComponentPickerCancel.Location = new System.Drawing.Point(683, 8);
+            this.btnComponentPickerCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnComponentPickerCancel.Name = "btnComponentPickerCancel";
+            this.btnComponentPickerCancel.Size = new System.Drawing.Size(112, 35);
+            this.btnComponentPickerCancel.TabIndex = 7;
+            this.btnComponentPickerCancel.Text = "Cancel";
+            this.btnComponentPickerCancel.UseVisualStyleBackColor = true;
+            this.btnComponentPickerCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // btnOK
+            // btnComponentPickerValidate
             // 
-            this.btnOK.Location = new System.Drawing.Point(640, 15);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 1;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnComponentPickerValidate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnComponentPickerValidate.Location = new System.Drawing.Point(562, 8);
+            this.btnComponentPickerValidate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnComponentPickerValidate.Name = "btnComponentPickerValidate";
+            this.btnComponentPickerValidate.Size = new System.Drawing.Size(112, 35);
+            this.btnComponentPickerValidate.TabIndex = 6;
+            this.btnComponentPickerValidate.Text = "OK";
+            this.btnComponentPickerValidate.UseVisualStyleBackColor = true;
+            this.btnComponentPickerValidate.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // SiteMapPicker
             // 
@@ -121,6 +125,7 @@
             this.Controls.Add(this.pnlHeader);
             this.Name = "SiteMapPicker";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlFooter.ResumeLayout(false);
@@ -133,9 +138,9 @@
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblHeader;
         private System.Windows.Forms.Panel pnlFooter;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ListView lvSitemaps;
         private System.Windows.Forms.ColumnHeader chName;
-        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnComponentPickerCancel;
+        private System.Windows.Forms.Button btnComponentPickerValidate;
     }
 }

@@ -24,7 +24,7 @@ namespace MsCrmTools.SiteMapEditor.Forms
                 {
                     Tag = entity
                 };
-
+                entity.Attributes.Remove("name");
                 lvSitemaps.Items.Add(item);
             }
         }
