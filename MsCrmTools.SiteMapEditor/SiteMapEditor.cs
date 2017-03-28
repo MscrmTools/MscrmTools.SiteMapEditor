@@ -995,12 +995,17 @@ namespace MsCrmTools.SiteMapEditor
                                 return;
                             }
                         }
+                        else if (ec.Entities.Count == 0)
+                        {
+                            var qe = new QueryExpression("sitemap");
+                            qe.ColumnSet = new ColumnSet(true);
+                            ec = Service.RetrieveMultiple(qe);
+                            siteMap = ec.Entities.First();
+                        }
                         else
                         {
                             siteMap = ec.Entities.First();
                         }
-
-                      
                     }
                     else
                     {
