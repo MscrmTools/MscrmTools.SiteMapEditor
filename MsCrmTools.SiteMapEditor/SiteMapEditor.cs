@@ -982,6 +982,12 @@ namespace MsCrmTools.SiteMapEditor
                             }
                         }
 
+                        // Adding default sitemap
+                        var qe = new QueryExpression("sitemap");
+                        qe.ColumnSet = new ColumnSet(true);
+                        EntityCollection ecDefault = Service.RetrieveMultiple(qe);
+                        ecDefault.Entities.First()["name"] = "Default";
+                        ec.Entities.Add(ecDefault.Entities.First());
 
                         if (ec.Entities.Count > 1)
                         {
@@ -994,13 +1000,6 @@ namespace MsCrmTools.SiteMapEditor
                             {
                                 return;
                             }
-                        }
-                        else if (ec.Entities.Count == 0)
-                        {
-                            var qe = new QueryExpression("sitemap");
-                            qe.ColumnSet = new ColumnSet(true);
-                            ec = Service.RetrieveMultiple(qe);
-                            siteMap = ec.Entities.First();
                         }
                         else
                         {
