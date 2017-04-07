@@ -1014,6 +1014,10 @@ namespace MsCrmTools.SiteMapEditor
                         siteMap = ec.Entities.First();
                     }
 
+                    if (siteMap.Contains("name"))
+                    {
+                        siteMap.Attributes.Remove("name");
+                    }
                     siteMapDoc = new XmlDocument();
                     siteMapDoc.LoadXml(siteMap.GetAttributeValue<string>("sitemapxml"));
                 },
