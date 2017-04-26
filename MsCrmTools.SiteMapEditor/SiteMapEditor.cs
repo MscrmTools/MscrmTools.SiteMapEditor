@@ -968,6 +968,12 @@ namespace MsCrmTools.SiteMapEditor
 
                         foreach (var siteMapId in sitemapsIds.Entities)
                         {
+                            if (ec.Entities.Any(ent => ent.Id == siteMapId.GetAttributeValue<Guid>("objectid") ||
+                             siteMapId.GetAttributeValue<EntityReference>("appmoduleidunique").Name == null))
+                            {
+                                continue;
+                            }
+
                             try
                             {
                                 var tmpSiteMap = Service.Retrieve("sitemap",
@@ -1029,9 +1035,13 @@ namespace MsCrmTools.SiteMapEditor
                         return;
                     }
 
-                    DisplaySiteMap();
+                    if (siteMap != null)
+                    {
+                        DisplaySiteMap();
+                        LoadCrmItems();
+                    }
+
                     EnableControls(true);
-                    LoadCrmItems();
                 },
                 ProgressChanged = e => { SetWorkingMessage(e.UserState.ToString()); }
             });
