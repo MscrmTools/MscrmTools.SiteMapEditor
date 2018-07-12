@@ -36,6 +36,18 @@ namespace MsCrmTools.SiteMapEditor
         private Entity siteMap;
         private XmlDocument siteMapDoc;
 
+        public SiteMapEditor()
+        {
+            InitializeComponent();
+        }
+
+        public string HelpUrl
+        {
+            get
+            {
+                return "https://github.com/MscrmTools/MscrmTools.SiteMapEditor/wiki";
+            }
+        }
 
         public string RepositoryName
         {
@@ -51,19 +63,6 @@ namespace MsCrmTools.SiteMapEditor
             {
                 return "MscrmTools";
             }
-        }
-
-        public string HelpUrl
-        {
-            get
-            {
-                return "https://github.com/MscrmTools/MscrmTools.SiteMapEditor/wiki";
-            }
-        }
-
-        public SiteMapEditor()
-        {
-            InitializeComponent();
         }
 
         #region Main ToolStrip Menu
@@ -619,7 +618,7 @@ namespace MsCrmTools.SiteMapEditor
                 case "Area":
                     {
                         if (collec.Count == 0) collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
-                        var ctrl = new AreaControl(collec, webResourcesImageCache, webResourcesHtmlCache, Service);
+                        var ctrl = new AreaControl(collec, webResourcesImageCache, webResourcesHtmlCache, Service, ConnectionDetail.OrganizationMajorVersion >= 9);
                         ctrl.Saved += CtrlSaved;
                         ctrl.Dock = DockStyle.Fill;
 
@@ -715,7 +714,7 @@ namespace MsCrmTools.SiteMapEditor
 
         private void TsbItemSaveClick(object sender, EventArgs e)
         {
-            if(!((ISiteMapSavable)panelContainer.Controls[0]).Save())
+            if (!((ISiteMapSavable)panelContainer.Controls[0]).Save())
             {
                 return;
             }
@@ -776,6 +775,7 @@ namespace MsCrmTools.SiteMapEditor
                         else
                             version = "2015SP1";
                         break;
+
                     case 8:
                         if (ConnectionDetail.OrganizationMinorVersion == 0)
                             version = "2016";
@@ -915,7 +915,7 @@ namespace MsCrmTools.SiteMapEditor
                     webResourcesImageCache = new List<Entity>();
 
                     var wrQuery = new QueryExpression("webresource");
-                    wrQuery.Criteria.AddCondition("webresourcetype", ConditionOperator.In, new object[] { 1, 5, 6, 7 });
+                    wrQuery.Criteria.AddCondition("webresourcetype", ConditionOperator.In, new object[] { 1, 5, 6, 7, 11 });
                     wrQuery.ColumnSet.AllColumns = true;
 
                     EntityCollection results = Service.RetrieveMultiple(wrQuery);
@@ -982,7 +982,7 @@ namespace MsCrmTools.SiteMapEditor
                                     siteMapId.GetAttributeValue<EntityReference>("appmoduleidunique").Name ?? "Default";
                                 ec.Entities.Add(tmpSiteMap);
                             }
-                            catch(Exception error)
+                            catch (Exception error)
                             {
                                 LogError($"Error while retrieving SiteMap for app {siteMapId.GetAttributeValue<EntityReference>("appmoduleidunique").Name ?? "Default"}:{error.Message}");
                             }
@@ -995,37 +995,15 @@ namespace MsCrmTools.SiteMapEditor
                         ecDefault.Entities.First()["name"] = "Default";
                         ec.Entities.Add(ecDefault.Entities.First());
 
-                        if (ec.Entities.Count > 1)
-                        {
-                            var smp = new SiteMapPicker(ec);
-                            if (smp.ShowDialog(this) == DialogResult.OK)
-                            {
-                                siteMap = smp.SelectedSitemap;
-                            }
-                            else
-                            {
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            siteMap = ec.Entities.First();
-                        }
+                        e.Result = ec.Entities.ToList();
                     }
                     else
                     {
                         var qe = new QueryExpression("sitemap");
                         qe.ColumnSet = new ColumnSet(true);
                         EntityCollection ec = Service.RetrieveMultiple(qe);
-                        siteMap = ec.Entities.First();
+                        e.Result = ec.Entities.ToList();
                     }
-
-                    if (siteMap.Contains("name"))
-                    {
-                        siteMap.Attributes.Remove("name");
-                    }
-                    siteMapDoc = new XmlDocument();
-                    siteMapDoc.LoadXml(siteMap.GetAttributeValue<string>("sitemapxml"));
                 },
                 PostWorkCallBack = e =>
                 {
@@ -1034,6 +1012,32 @@ namespace MsCrmTools.SiteMapEditor
                         MessageBox.Show(this, e.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+
+                    var sitemaps = (List<Entity>)e.Result;
+
+                    if (sitemaps.Count > 1)
+                    {
+                        var smp = new SiteMapPicker(new EntityCollection(sitemaps));
+                        if (smp.ShowDialog(this) == DialogResult.OK)
+                        {
+                            siteMap = smp.SelectedSitemap;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        siteMap = sitemaps.First();
+                    }
+
+                    if (siteMap.Contains("name"))
+                    {
+                        siteMap.Attributes.Remove("name");
+                    }
+                    siteMapDoc = new XmlDocument();
+                    siteMapDoc.LoadXml(siteMap.GetAttributeValue<string>("sitemapxml"));
 
                     if (siteMap != null)
                     {
@@ -1255,6 +1259,11 @@ namespace MsCrmTools.SiteMapEditor
 
         #endregion Others
 
+        private void llHidePnlInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ((LinkLabel)sender).Parent.Visible = false;
+        }
+
         private void loadEntitiesAndWebResourcesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExecuteMethod(LoadCrmItems);
@@ -1264,12 +1273,5 @@ namespace MsCrmTools.SiteMapEditor
         {
             CloseTool();
         }
-
-        private void llHidePnlInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            ((LinkLabel) sender).Parent.Visible = false;
-        }
-
-       
     }
 }

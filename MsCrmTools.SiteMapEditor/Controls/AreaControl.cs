@@ -3,12 +3,12 @@
 // CODEPLEX: http://xrmtoolbox.codeplex.com
 // BLOG: http://mscrmtools.blogspot.com
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using Microsoft.Xrm.Sdk;
 using MsCrmTools.SiteMapEditor.AppCode;
 using MsCrmTools.SiteMapEditor.Forms.WebRessources;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace MsCrmTools.SiteMapEditor.Controls
 {
@@ -16,36 +16,40 @@ namespace MsCrmTools.SiteMapEditor.Controls
     {
         private readonly Dictionary<string, string> collec;
 
-        private string initialUrl = "";
-        private string initialId = "";
-        private string initialIcon = "";
-        private string initialTitle = "";
         private string initialDescription = "";
+        private string initialIcon = "";
+        private string initialId = "";
         private bool initialShowGroups;
+        private string initialTitle = "";
+        private string initialUrl = "";
 
-        private List<Entity> webResourcesImageCache;
-        private List<Entity> webResourcesHtmlCache;
+        private string initialVectorIcon = "";
+        private bool isV9orMore;
+
         private IOrganizationService service;
-        ToolTip tip;
+        private ToolTip tip;
+        private List<Entity> webResourcesHtmlCache;
+        private List<Entity> webResourcesImageCache;
 
         #region Delegates
 
         public delegate void SaveEventHandler(object sender, SaveEventArgs e);
 
-        #endregion
+        #endregion Delegates
 
         #region Event Handlers
 
         public event SaveEventHandler Saved;
 
-        #endregion
+        #endregion Event Handlers
 
-        public AreaControl(List<Entity> webResourcesImageCache, List<Entity> webResourcesHtmlCache, IOrganizationService service)
+        public AreaControl(List<Entity> webResourcesImageCache, List<Entity> webResourcesHtmlCache, IOrganizationService service, bool isV9orMore)
         {
             InitializeComponent();
             this.webResourcesImageCache = webResourcesImageCache;
             this.webResourcesHtmlCache = webResourcesHtmlCache;
             this.service = service;
+            this.isV9orMore = isV9orMore;
 
             collec = new Dictionary<string, string>();
 
@@ -59,48 +63,12 @@ namespace MsCrmTools.SiteMapEditor.Controls
             tip.SetToolTip(txtAreaDescription, "Deprecated. Use the <Description> (SiteMap) element.");
         }
 
-        public AreaControl(Dictionary<string, string> collection, List<Entity> webResourcesImageCache, List<Entity> webResourcesHtmlCache, IOrganizationService service)
-            : this(webResourcesImageCache, webResourcesHtmlCache, service)
+        public AreaControl(Dictionary<string, string> collection, List<Entity> webResourcesImageCache, List<Entity> webResourcesHtmlCache, IOrganizationService service, bool isV9orMore)
+            : this(webResourcesImageCache, webResourcesHtmlCache, service, isV9orMore)
         {
             collec = collection;
 
             FillControls();
-        }
-
-        private void FillControls()
-        {
-            txtAreaUrl.Text = collec.ContainsKey("Url") ? collec["Url"] : "";
-            txtAreaId.Text = collec.ContainsKey("Id") ? collec["Id"] : "";
-            txtAreaIcon.Text = collec.ContainsKey("Icon") ? collec["Icon"] : "";
-            chkAreaShowGroups.Checked = collec.ContainsKey("ShowGroups") && collec["ShowGroups"].ToLower() == "true";
-            txtAreaResourceId.Text = collec.ContainsKey("ResourceId") ? collec["ResourceId"] : "";
-            txtAreaDescriptionResourceId.Text = collec.ContainsKey("DescriptionResourceId") ? collec["DescriptionResourceId"] : "";
-
-            txtAreaTitle.Text = collec.ContainsKey("Title") ? collec["Title"] : "";
-            txtAreaDescription.Text = collec.ContainsKey("Description") ? collec["Description"] : "";
-
-            initialUrl = txtAreaUrl.Text;
-            initialId = txtAreaId.Text;
-            initialIcon = txtAreaIcon.Text;
-            initialShowGroups = chkAreaShowGroups.Checked;
-            initialDescription = txtAreaDescription.Text;
-            initialTitle = txtAreaTitle.Text;
-        }
-
-        private void SiteMapControl_Leave(object sender, EventArgs e)
-        {
-            if (initialUrl != txtAreaUrl.Text ||
-                initialId != txtAreaId.Text ||
-                initialIcon != txtAreaIcon.Text ||
-                initialDescription != txtAreaDescription.Text ||
-                initialTitle != txtAreaTitle.Text ||
-                initialShowGroups != chkAreaShowGroups.Checked)
-            {
-                if (MessageBox.Show("You didn't save your changes! Do you want to save them now?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    Save();
-                }
-            }
         }
 
         public bool Save()
@@ -120,6 +88,8 @@ namespace MsCrmTools.SiteMapEditor.Controls
                     collection.Add("Id", txtAreaId.Text);
                 if (txtAreaIcon.Text.Length > 0)
                     collection.Add("Icon", txtAreaIcon.Text);
+                if (isV9orMore && txtVectorIcon.Text.Length > 0)
+                    collection.Add("VectorIcon", txtVectorIcon.Text);
                 if (txtAreaResourceId.Text.Length > 0)
                     collection.Add("ResourceId", txtAreaResourceId.Text);
                 if (txtAreaDescriptionResourceId.Text.Length > 0)
@@ -138,6 +108,7 @@ namespace MsCrmTools.SiteMapEditor.Controls
                 initialUrl = txtAreaUrl.Text;
                 initialId = txtAreaId.Text;
                 initialIcon = txtAreaIcon.Text;
+                initialVectorIcon = txtVectorIcon.Text;
                 initialShowGroups = chkAreaShowGroups.Checked;
                 initialDescription = txtAreaDescription.Text;
                 initialTitle = txtAreaTitle.Text;
@@ -148,24 +119,24 @@ namespace MsCrmTools.SiteMapEditor.Controls
             }
         }
 
-        #region Send Events
-
-        /// <summary>
-        /// Sends a connection success message 
-        /// </summary>
-        /// <param name="service">IOrganizationService generated</param>
-        /// <param name="parameters">Lsit of parameter</param>
-        private void SendSaveMessage(Dictionary<string, string> collection)
+        private void btnBrowseVectorIcon_Click(object sender, EventArgs e)
         {
-            SaveEventArgs sea = new SaveEventArgs { AttributeCollection = collection };
-
-            if (Saved != null)
+            if (service == null)
             {
-                Saved(this, sea);
+                MessageBox.Show(ParentForm,
+                    "You are not connected to an organization! Please connect to an organization and reopen this Area item",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            WebResourcePicker wrp = new WebResourcePicker(WebResourcePicker.WebResourceType.Svg, webResourcesImageCache, webResourcesHtmlCache, service);
+            wrp.StartPosition = FormStartPosition.CenterParent;
+
+            if (wrp.ShowDialog() == DialogResult.OK)
+            {
+                txtVectorIcon.Text = "$webresource:" + wrp.SelectedResource;
             }
         }
-
-        #endregion
 
         private void btnBrowsIcon_Click(object sender, EventArgs e)
         {
@@ -177,7 +148,7 @@ namespace MsCrmTools.SiteMapEditor.Controls
                 return;
             }
 
-            WebResourcePicker wrp = new WebResourcePicker(WebResourcePicker.WebResourceType.Image, webResourcesImageCache,webResourcesHtmlCache, service );
+            WebResourcePicker wrp = new WebResourcePicker(WebResourcePicker.WebResourceType.Image, webResourcesImageCache, webResourcesHtmlCache, service);
             wrp.StartPosition = FormStartPosition.CenterParent;
 
             if (wrp.ShowDialog() == DialogResult.OK)
@@ -194,8 +165,8 @@ namespace MsCrmTools.SiteMapEditor.Controls
                     "You are not connected to an organization! Please connect to an organization and reopen this Area item",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            } 
-            
+            }
+
             WebResourcePicker wrp = new WebResourcePicker(WebResourcePicker.WebResourceType.WebPage, webResourcesImageCache, webResourcesHtmlCache, service);
             wrp.StartPosition = FormStartPosition.CenterParent;
 
@@ -204,5 +175,66 @@ namespace MsCrmTools.SiteMapEditor.Controls
                 txtAreaUrl.Text = "$webresource:" + wrp.SelectedResource;
             }
         }
+
+        private void FillControls()
+        {
+            txtAreaUrl.Text = collec.ContainsKey("Url") ? collec["Url"] : "";
+            txtAreaId.Text = collec.ContainsKey("Id") ? collec["Id"] : "";
+            txtAreaIcon.Text = collec.ContainsKey("Icon") ? collec["Icon"] : "";
+            txtVectorIcon.Text = collec.ContainsKey("VectorIcon") ? collec["VectorIcon"] : "";
+            chkAreaShowGroups.Checked = collec.ContainsKey("ShowGroups") && collec["ShowGroups"].ToLower() == "true";
+            txtAreaResourceId.Text = collec.ContainsKey("ResourceId") ? collec["ResourceId"] : "";
+            txtAreaDescriptionResourceId.Text = collec.ContainsKey("DescriptionResourceId") ? collec["DescriptionResourceId"] : "";
+
+            txtAreaTitle.Text = collec.ContainsKey("Title") ? collec["Title"] : "";
+            txtAreaDescription.Text = collec.ContainsKey("Description") ? collec["Description"] : "";
+
+            initialUrl = txtAreaUrl.Text;
+            initialId = txtAreaId.Text;
+            initialIcon = txtAreaIcon.Text;
+            initialVectorIcon = txtVectorIcon.Text;
+            initialShowGroups = chkAreaShowGroups.Checked;
+            initialDescription = txtAreaDescription.Text;
+            initialTitle = txtAreaTitle.Text;
+
+            txtVectorIcon.Enabled = isV9orMore;
+            btnBrowseVectorIcon.Enabled = isV9orMore;
+        }
+
+        private void SiteMapControl_Leave(object sender, EventArgs e)
+        {
+            if (initialUrl != txtAreaUrl.Text ||
+                initialId != txtAreaId.Text ||
+                initialIcon != txtAreaIcon.Text ||
+                initialVectorIcon != txtVectorIcon.Text ||
+                initialDescription != txtAreaDescription.Text ||
+                initialTitle != txtAreaTitle.Text ||
+                initialShowGroups != chkAreaShowGroups.Checked)
+            {
+                if (MessageBox.Show("You didn't save your changes! Do you want to save them now?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    Save();
+                }
+            }
+        }
+
+        #region Send Events
+
+        /// <summary>
+        /// Sends a connection success message
+        /// </summary>
+        /// <param name="service">IOrganizationService generated</param>
+        /// <param name="parameters">Lsit of parameter</param>
+        private void SendSaveMessage(Dictionary<string, string> collection)
+        {
+            SaveEventArgs sea = new SaveEventArgs { AttributeCollection = collection };
+
+            if (Saved != null)
+            {
+                Saved(this, sea);
+            }
+        }
+
+        #endregion Send Events
     }
 }

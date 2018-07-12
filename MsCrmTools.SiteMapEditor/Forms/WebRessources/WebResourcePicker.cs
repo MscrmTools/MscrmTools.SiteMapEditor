@@ -41,7 +41,8 @@ namespace MsCrmTools.SiteMapEditor.Forms.WebRessources
             Image = 5,
             Silverlight = 8,
             Xsl = 9,
-            Ico = 10
+            Ico = 10,
+            Svg = 11
         }
 
         #endregion Variables
@@ -224,11 +225,18 @@ namespace MsCrmTools.SiteMapEditor.Forms.WebRessources
 
             foreach (Entity webresource in webResourcesImageCache)
             {
-                ListViewItem item = new ListViewItem(webresource.Contains("displayname") ? webresource["displayname"].ToString() : "N/A");
-                item.SubItems.Add(webresource["name"].ToString());
-                item.Tag = webresource;
+                if (requestedType == 11 && webresource.GetAttributeValue<OptionSetValue>("webresourcetype").Value == 11
+                    || requestedType != 11 &&
+                    webresource.GetAttributeValue<OptionSetValue>("webresourcetype").Value != 11)
+                {
+                    ListViewItem item = new ListViewItem(webresource.Contains("displayname")
+                        ? webresource["displayname"].ToString()
+                        : "N/A");
+                    item.SubItems.Add(webresource["name"].ToString());
+                    item.Tag = webresource;
 
-                ListViewDelegates.AddItem(lstWebResources, item);
+                    ListViewDelegates.AddItem(lstWebResources, item);
+                }
             }
 
             ListViewDelegates.Sort(lstWebResources);

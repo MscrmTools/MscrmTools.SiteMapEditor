@@ -32,7 +32,8 @@ namespace MsCrmTools.SiteMapEditor.Forms.WebRessources
             Image = 5,
             Silverlight = 8,
             Xsl = 9,
-            Ico = 10
+            Ico = 10,
+            Svg = 11
         }
 
         public Entity CreatedEntity { get; set; }
@@ -85,6 +86,10 @@ namespace MsCrmTools.SiteMapEditor.Forms.WebRessources
                 case 10:
                     ofd.Filter = "ICO file (*.ico)|*.ico";
                     break;
+
+                case 11:
+                    ofd.Filter = "SVF file (*.svg)|*.svg";
+                    break;
             }
 
             if (ofd.ShowDialog() == DialogResult.OK)
@@ -126,6 +131,10 @@ namespace MsCrmTools.SiteMapEditor.Forms.WebRessources
 
                     case "gif":
                         webR["webresourcetype"] = new OptionSetValue(7);
+                        break;
+
+                    case "svg":
+                        webR["webresourcetype"] = new OptionSetValue(11);
                         break;
                 }
 
