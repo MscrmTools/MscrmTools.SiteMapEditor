@@ -1,8 +1,5 @@
 ﻿// PROJECT : MsCrmTools.SiteMapEditor
 // This project was developed by Tanguy Touzard
-// CODEPLEX: http://xrmtoolbox.codeplex.com
-// BLOG: http://mscrmtools.blogspot.com
-
 using McTools.Xrm.Connection;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
@@ -41,29 +38,11 @@ namespace MsCrmTools.SiteMapEditor
             InitializeComponent();
         }
 
-        public string HelpUrl
-        {
-            get
-            {
-                return "https://github.com/MscrmTools/MscrmTools.SiteMapEditor/wiki";
-            }
-        }
+        public string HelpUrl => "https://github.com/MscrmTools/MscrmTools.SiteMapEditor/wiki";
 
-        public string RepositoryName
-        {
-            get
-            {
-                return "MscrmTools.SiteMapEditor";
-            }
-        }
+        public string RepositoryName => "MscrmTools.SiteMapEditor";
 
-        public string UserName
-        {
-            get
-            {
-                return "MscrmTools";
-            }
-        }
+        public string UserName => "MscrmTools";
 
         #region Main ToolStrip Menu
 
@@ -952,6 +931,30 @@ namespace MsCrmTools.SiteMapEditor
                 {
                     if (new Version(ConnectionDetail.OrganizationVersion) >= new Version(8, 2, 0, 0))
                     {
+                        //var query = new QueryExpression("sitemap")
+                        //{
+                        //    ColumnSet = new ColumnSet(true),
+                        //    LinkEntities =
+                        //    {
+                        //        new LinkEntity
+                        //        {
+                        //            LinkFromEntityName = "sitemap",
+                        //            LinkFromAttributeName = "sitemapidunique",
+                        //            LinkToAttributeName = "objectid",
+                        //            LinkToEntityName = "appmodulecomponent",
+                        //            LinkCriteria = new FilterExpression
+                        //            {
+                        //                Conditions =
+                        //                {
+                        //                    new ConditionExpression("componenttype", ConditionOperator.Equal, 62)
+                        //                }
+                        //            }
+                        //        }
+                        //    }
+                        //};
+
+                        //var sms = Service.RetrieveMultiple(query).Entities;
+
                         var sitemapsIds = Service.RetrieveMultiple(new QueryExpression("appmodulecomponent")
                         {
                             ColumnSet = new ColumnSet(true),
@@ -978,6 +981,10 @@ namespace MsCrmTools.SiteMapEditor
                             {
                                 var tmpSiteMap = Service.Retrieve("sitemap",
                                     siteMapId.GetAttributeValue<Guid>("objectid"), new ColumnSet(true));
+
+                                if (tmpSiteMap.GetAttributeValue<OptionSetValue>("componentstate")?.Value != 0)
+                                    continue;
+
                                 tmpSiteMap["name"] =
                                     siteMapId.GetAttributeValue<EntityReference>("appmoduleidunique").Name ?? "Default";
                                 ec.Entities.Add(tmpSiteMap);
