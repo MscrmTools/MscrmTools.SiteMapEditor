@@ -77,7 +77,7 @@ namespace MsCrmTools.SiteMapEditor.Forms
 
             foreach (var emd in entityCache)
             {
-                if ((emd.IsCustomizable.Value || emd.IsManaged.Value == false) && emd.DisplayName.UserLocalizedLabel != null)
+                if (emd.DisplayName.UserLocalizedLabel != null)
                 {
                     var item = new ListViewItem
                     {

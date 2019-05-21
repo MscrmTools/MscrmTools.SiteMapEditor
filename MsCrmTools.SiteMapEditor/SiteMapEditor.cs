@@ -864,6 +864,16 @@ namespace MsCrmTools.SiteMapEditor
 
         public void LoadCrmItems()
         {
+            if (entityCache?.Count > 0 || webResourcesHtmlCache?.Count > 0)
+            {
+                if (DialogResult.No == MessageBox.Show(this,
+                        @"Do you want to reload entities metadata and webresources?", @"Question",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                {
+                    return;
+                }
+            }
+
             EnableControls(false);
 
             WorkAsync(new WorkAsyncInfo
@@ -875,14 +885,7 @@ namespace MsCrmTools.SiteMapEditor
                     entityCache = new List<EntityMetadata>();
                     webResourcesHtmlCache = new List<Entity>();
 
-                    var request = new RetrieveAllEntitiesRequest
-                    {
-                        EntityFilters = EntityFilters.Entity
-                    };
-
-                    var response = (RetrieveAllEntitiesResponse)Service.Execute(request);
-
-                    foreach (var emd in response.EntityMetadata)
+                    foreach (var emd in MetadataHelper.GetEntitiesNames(Service))
                     {
                         entityCache.Add(emd);
                     }
@@ -895,7 +898,7 @@ namespace MsCrmTools.SiteMapEditor
 
                     var wrQuery = new QueryExpression("webresource");
                     wrQuery.Criteria.AddCondition("webresourcetype", ConditionOperator.In, new object[] { 1, 5, 6, 7, 11 });
-                    wrQuery.ColumnSet.AllColumns = true;
+                    wrQuery.ColumnSet.AddColumns("name", "displayname", "webresourcetype");
 
                     EntityCollection results = Service.RetrieveMultiple(wrQuery);
 
@@ -931,30 +934,6 @@ namespace MsCrmTools.SiteMapEditor
                 {
                     if (new Version(ConnectionDetail.OrganizationVersion) >= new Version(8, 2, 0, 0))
                     {
-                        //var query = new QueryExpression("sitemap")
-                        //{
-                        //    ColumnSet = new ColumnSet(true),
-                        //    LinkEntities =
-                        //    {
-                        //        new LinkEntity
-                        //        {
-                        //            LinkFromEntityName = "sitemap",
-                        //            LinkFromAttributeName = "sitemapidunique",
-                        //            LinkToAttributeName = "objectid",
-                        //            LinkToEntityName = "appmodulecomponent",
-                        //            LinkCriteria = new FilterExpression
-                        //            {
-                        //                Conditions =
-                        //                {
-                        //                    new ConditionExpression("componenttype", ConditionOperator.Equal, 62)
-                        //                }
-                        //            }
-                        //        }
-                        //    }
-                        //};
-
-                        //var sms = Service.RetrieveMultiple(query).Entities;
-
                         var sitemapsIds = Service.RetrieveMultiple(new QueryExpression("appmodulecomponent")
                         {
                             ColumnSet = new ColumnSet(true),
