@@ -176,81 +176,96 @@ namespace MsCrmTools.SiteMapEditor
             {
                 EnableControls(false);
 
-                siteMapDoc = new XmlDocument();
-                siteMapDoc.Load(ofd.FileName);
-
-                if (siteMapDoc.DocumentElement.Name != "SiteMap" ||
-                    siteMapDoc.DocumentElement.ChildNodes.Count > 0 &&
-                    siteMapDoc.DocumentElement.ChildNodes[0].Name == "SiteMap")
+                try
                 {
-                    MessageBox.Show(this, "Invalid Xml: SiteMap Xml root must be SiteMap!", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    siteMapDoc = new XmlDocument();
+                    siteMapDoc.Load(ofd.FileName);
 
-                    tsbMainOpenSiteMap.Enabled = true;
-                    toolStripButtonLoadSiteMapFromDisk.Enabled = true;
-                }
-                else
-                {
-                    if (Service != null && entityCache == null)
+                    if (siteMapDoc.DocumentElement.Name != "SiteMap" ||
+                        siteMapDoc.DocumentElement.ChildNodes.Count > 0 &&
+                        siteMapDoc.DocumentElement.ChildNodes[0].Name == "SiteMap")
                     {
-                        WorkAsync(new WorkAsyncInfo
-                        {
-                            Message = "Loading Entities...",
-                            Work = (bw, evt) =>
-                            { // Recherche des métadonnées
-                                entityCache = new List<EntityMetadata>();
-                                webResourcesHtmlCache = new List<Entity>();
+                        MessageBox.Show(this, "Invalid Xml: SiteMap Xml root must be SiteMap!", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                                var request = new RetrieveAllEntitiesRequest
-                                {
-                                    EntityFilters = EntityFilters.Entity
-                                };
-
-                                var response = (RetrieveAllEntitiesResponse)Service.Execute(request);
-
-                                foreach (var emd in response.EntityMetadata)
-                                {
-                                    entityCache.Add(emd);
-                                }
-                                // Fin Recherche des métadonnées
-
-                                bw.ReportProgress(0, "Loading web resources...");
-                                // Rercherche des images
-
-                                webResourcesImageCache = new List<Entity>();
-
-                                var wrQuery = new QueryExpression("webresource");
-                                wrQuery.Criteria.AddCondition("webresourcetype", ConditionOperator.In,
-                                    new object[] { 1, 5, 6, 7 });
-                                wrQuery.ColumnSet.AllColumns = true;
-
-                                EntityCollection results = Service.RetrieveMultiple(wrQuery);
-
-                                foreach (Entity webresource in results.Entities)
-                                {
-                                    if (webresource.GetAttributeValue<OptionSetValue>("webresourcetype").Value == 1)
-                                    {
-                                        webResourcesHtmlCache.Add(webresource);
-                                    }
-                                    else
-                                    {
-                                        webResourcesImageCache.Add(webresource);
-                                    }
-                                }
-                            },
-                            PostWorkCallBack = evt =>
-                            {
-                                DisplaySiteMap();
-                                EnableControls(true);
-                            },
-                            ProgressChanged = evt => { SetWorkingMessage(evt.UserState.ToString()); }
-                        });
+                        tsbMainOpenSiteMap.Enabled = true;
+                        toolStripButtonLoadSiteMapFromDisk.Enabled = true;
                     }
                     else
                     {
-                        DisplaySiteMap();
-                        EnableControls(true);
+                        if (Service != null && entityCache == null)
+                        {
+                            EnableControls(false);
+
+                            WorkAsync(new WorkAsyncInfo
+                            {
+                                Message = "Loading Entities...",
+                                Work = (bw, evt) =>
+                                {
+                                    // Recherche des métadonnées
+                                    entityCache = new List<EntityMetadata>();
+                                    webResourcesHtmlCache = new List<Entity>();
+
+                                    var request = new RetrieveAllEntitiesRequest
+                                    {
+                                        EntityFilters = EntityFilters.Entity
+                                    };
+
+                                    var response = (RetrieveAllEntitiesResponse)Service.Execute(request);
+
+                                    foreach (var emd in response.EntityMetadata)
+                                    {
+                                        entityCache.Add(emd);
+                                    }
+                                    // Fin Recherche des métadonnées
+
+                                    bw.ReportProgress(0, "Loading web resources...");
+                                    // Rercherche des images
+
+                                    webResourcesImageCache = new List<Entity>();
+
+                                    var wrQuery = new QueryExpression("webresource");
+                                    wrQuery.Criteria.AddCondition("webresourcetype", ConditionOperator.In,
+                                        new object[] { 1, 5, 6, 7 });
+                                    wrQuery.ColumnSet.AllColumns = true;
+
+                                    EntityCollection results = Service.RetrieveMultiple(wrQuery);
+
+                                    foreach (Entity webresource in results.Entities)
+                                    {
+                                        if (webresource.GetAttributeValue<OptionSetValue>("webresourcetype").Value == 1)
+                                        {
+                                            webResourcesHtmlCache.Add(webresource);
+                                        }
+                                        else
+                                        {
+                                            webResourcesImageCache.Add(webresource);
+                                        }
+                                    }
+                                },
+                                PostWorkCallBack = evt =>
+                                {
+                                    DisplaySiteMap();
+                                    EnableControls(true);
+                                },
+                                ProgressChanged = evt => { SetWorkingMessage(evt.UserState.ToString()); }
+                            });
+                        }
+                        else
+                        {
+                            DisplaySiteMap();
+                            EnableControls(true);
+                        }
                     }
+                }
+                catch (Exception error)
+                {
+                    MessageBox.Show(this, $@"An error occured: {error.Message}", @"Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    EnableControls(true);
                 }
             }
         }
