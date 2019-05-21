@@ -42,6 +42,7 @@ namespace MsCrmTools.SiteMapEditor.Controls
         private bool initialSkuSPLA;
         private string initialTitle = "";
         private string initialUrl = "";
+        private string initialVectorIcon = "";
         private bool isCrm2013Area = false;
         private IOrganizationService service;
         private ToolTip tip;
@@ -183,6 +184,7 @@ namespace MsCrmTools.SiteMapEditor.Controls
                 initialGetStartedPanePathOutlook = txtSubAreaGetStartedPanePathOutlook.Text;
                 initialGetStartedPanePathAdminOutlook = txtSubAreaGetStartedPanePathAdminOutlook.Text;
                 initialIcon = txtSubAreaIcon.Text;
+                initialVectorIcon = txtVectorIcon.Text;
                 initialId = txtSubAreaId.Text;
                 initialUrl = txtSubAreaUrl.Text;
                 initialDescription = txtSubAreaDescription.Text;
@@ -219,6 +221,25 @@ namespace MsCrmTools.SiteMapEditor.Controls
             if (dPicker.ShowDialog(ParentForm) == DialogResult.OK)
             {
                 txtDefaultDashboardId.Text = dPicker.SelectedDashboard.Id.ToString("B");
+            }
+        }
+
+        private void btnBrowseVectorIcon_Click(object sender, EventArgs e)
+        {
+            if (service == null)
+            {
+                MessageBox.Show(ParentForm,
+                    "You are not connected to an organization! Please connect to an organization and reopen this Area item",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            WebResourcePicker wrp = new WebResourcePicker(WebResourcePicker.WebResourceType.Svg, imageCache, htmlCache, service);
+            wrp.StartPosition = FormStartPosition.CenterParent;
+
+            if (wrp.ShowDialog() == DialogResult.OK)
+            {
+                txtVectorIcon.Text = "$webresource:" + wrp.SelectedResource;
             }
         }
 
@@ -304,6 +325,7 @@ namespace MsCrmTools.SiteMapEditor.Controls
             initialGetStartedPanePathOutlook = txtSubAreaGetStartedPanePathOutlook.Text;
             initialGetStartedPanePathAdminOutlook = txtSubAreaGetStartedPanePathAdminOutlook.Text;
             initialIcon = txtSubAreaIcon.Text;
+            initialVectorIcon = txtVectorIcon.Text;
             initialId = txtSubAreaId.Text;
             initialUrl = txtSubAreaUrl.Text;
             initialDescription = txtSubAreaDescription.Text;
@@ -348,6 +370,7 @@ namespace MsCrmTools.SiteMapEditor.Controls
             initialGetStartedPanePathOutlook != txtSubAreaGetStartedPanePathOutlook.Text ||
             initialGetStartedPanePathAdminOutlook != txtSubAreaGetStartedPanePathAdminOutlook.Text ||
             initialIcon != txtSubAreaIcon.Text ||
+            initialVectorIcon != txtVectorIcon.Text ||
             initialId != txtSubAreaId.Text ||
             initialUrl != txtSubAreaUrl.Text ||
             initialDescription != txtSubAreaDescription.Text ||
