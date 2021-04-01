@@ -26,6 +26,31 @@ namespace MsCrmTools.SiteMapEditor
 {
     public partial class SiteMapEditor : PluginControlBase, IGitHubPlugin, IHelpPlugin
     {
+        private int locale;
+        internal int Locale
+        {
+            get
+            {
+                if (locale == 0)
+                {
+
+                    string fetch = $@"<fetch>
+  <entity name='usersettings' >
+    <attribute name='localeid' />
+    <link-entity name='systemuser' from='systemuserid' to='systemuserid' >
+      <filter>
+        <condition attribute='internalemailaddress' operator='eq' value='{ ConnectionDetail.UserName}' />
+      </filter>
+    </link-entity>
+  </entity>
+</fetch>";
+                    locale = Service.RetrieveMultiple(new FetchExpression(fetch)).Entities[0].GetAttributeValue<int>("localeid");
+
+
+                }
+                return locale;
+            }
+        }
         internal Clipboard clipboard = new Clipboard();
         internal List<EntityMetadata> entityCache;
         internal List<Entity> webResourcesHtmlCache;
@@ -53,7 +78,9 @@ namespace MsCrmTools.SiteMapEditor
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a CRM 2013 organization! Are you sure you want to continue?",
                     "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
                     return;
+                }
             }
 
             ResetSiteMap(2013);
@@ -67,7 +94,9 @@ namespace MsCrmTools.SiteMapEditor
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a CRM 2015 organization! Are you sure you want to continue?",
                     "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
                     return;
+                }
             }
 
             ResetSiteMap(2015);
@@ -81,7 +110,9 @@ namespace MsCrmTools.SiteMapEditor
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a CRM 2015 Update 1 organization! Are you sure you want to continue?",
                     "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
                     return;
+                }
             }
 
             ResetSiteMap("2015SP1");
@@ -94,7 +125,9 @@ namespace MsCrmTools.SiteMapEditor
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a CRM 2016 organization! Are you sure you want to continue?",
                     "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
                     return;
+                }
             }
 
             ResetSiteMap("2016");
@@ -107,7 +140,9 @@ namespace MsCrmTools.SiteMapEditor
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a CRM 2016 SP1/Update 1 organization! Are you sure you want to continue?",
                     "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
                     return;
+                }
             }
 
             ResetSiteMap("2016SP1");
@@ -120,7 +155,9 @@ namespace MsCrmTools.SiteMapEditor
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a Dynamics 365 (8.2) organization! Are you sure you want to continue?",
                     "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
                     return;
+                }
             }
 
             ResetSiteMap("8.2");
@@ -158,7 +195,9 @@ namespace MsCrmTools.SiteMapEditor
                 if (DialogResult.No == MessageBox.Show(this,
                     "Your current organization is not a CRM 2011 organization! Are you sure you want to continue?",
                     "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                {
                     return;
+                }
             }
 
             ResetSiteMap(2011);
@@ -248,7 +287,7 @@ namespace MsCrmTools.SiteMapEditor
                                     DisplaySiteMap();
                                     EnableControls(true);
                                 },
-                                ProgressChanged = evt => { SetWorkingMessage(evt.UserState.ToString()); }
+                                ProgressChanged = evt => SetWorkingMessage(evt.UserState.ToString())
                             });
                         }
                         else
@@ -315,6 +354,22 @@ namespace MsCrmTools.SiteMapEditor
             ExecuteMethod(LoadSiteMap);
         }
 
+        private void TsbExportExcelClick(object sender, EventArgs e)
+        {
+            var sfd = new SaveFileDialog
+            {
+                Title = "Select a location to save the SiteMap as a Excel file",
+                Filter = "Excel file (*.xlsx)|*.xlsx",
+                FileName = "SiteMap.xlsx"
+            };
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+
+                ExportToExcel.Save(sfd.FileName, tvSiteMap, Locale);
+            }
+        }
+
         #endregion Main ToolStrip Menu
 
         #region TreeView ToolStrip Menu
@@ -335,84 +390,68 @@ namespace MsCrmTools.SiteMapEditor
                     switch (resultNode.Name)
                     {
                         case "Area":
+                            if (!selectedNode.Text.StartsWith("SiteMap"))
                             {
-                                if (!selectedNode.Text.StartsWith("SiteMap"))
-                                {
-                                    throw new Exception(
-                                        "Invalid Xml content for SiteMap node!\r\n\r\n'Area' Xml content is allowed only for 'SiteMap'.");
-                                }
+                                throw new Exception(
+                                    "Invalid Xml content for SiteMap node!\r\n\r\n'Area' Xml content is allowed only for 'SiteMap'.");
                             }
                             break;
 
                         case "Group":
+                            if (!selectedNode.Text.StartsWith("Area"))
                             {
-                                if (!selectedNode.Text.StartsWith("Area"))
-                                {
-                                    throw new Exception(
-                                        "Invalid Xml content for Area node!\r\n\r\n'Group' Xml content is allowed only for 'Area'.");
-                                }
+                                throw new Exception(
+                                    "Invalid Xml content for Area node!\r\n\r\n'Group' Xml content is allowed only for 'Area'.");
                             }
                             break;
 
                         case "SubArea":
+                            if (!selectedNode.Text.StartsWith("Group"))
                             {
-                                if (!selectedNode.Text.StartsWith("Group"))
-                                {
-                                    throw new Exception(
-                                        "Invalid Xml content for Group node!\r\n\r\n'SubArea' Xml content is allowed only for 'Group'.");
-                                }
+                                throw new Exception(
+                                    "Invalid Xml content for Group node!\r\n\r\n'SubArea' Xml content is allowed only for 'Group'.");
                             }
                             break;
 
                         case "Titles":
+                            if (!selectedNode.Text.StartsWith("Group") && !selectedNode.Text.StartsWith("SubArea") &&
+                                !selectedNode.Text.StartsWith("Area"))
                             {
-                                if (!selectedNode.Text.StartsWith("Group") && !selectedNode.Text.StartsWith("SubArea") &&
-                                    !selectedNode.Text.StartsWith("Area"))
-                                {
-                                    throw new Exception("Invalid Xml content for " + selectedNode.Text.Split(' ')[0] +
-                                                        " node!\r\n\r\n'Titles' Xml content is allowed only for 'Area', 'Group' and 'SubArea'.");
-                                }
+                                throw new Exception("Invalid Xml content for " + selectedNode.Text.Split(' ')[0] +
+                                                    " node!\r\n\r\n'Titles' Xml content is allowed only for 'Area', 'Group' and 'SubArea'.");
                             }
                             break;
 
                         case "Descriptions":
+                            if (!selectedNode.Text.StartsWith("Group") && !selectedNode.Text.StartsWith("SubArea") &&
+                                !selectedNode.Text.StartsWith("Area"))
                             {
-                                if (!selectedNode.Text.StartsWith("Group") && !selectedNode.Text.StartsWith("SubArea") &&
-                                    !selectedNode.Text.StartsWith("Area"))
-                                {
-                                    throw new Exception("Invalid Xml content for " + selectedNode.Text.Split(' ')[0] +
-                                                        " node!\r\n\r\n'Descriptions' Xml content is allowed only for 'Area', 'Group' and 'SubArea'.");
-                                }
+                                throw new Exception("Invalid Xml content for " + selectedNode.Text.Split(' ')[0] +
+                                                    " node!\r\n\r\n'Descriptions' Xml content is allowed only for 'Area', 'Group' and 'SubArea'.");
                             }
                             break;
 
                         case "Title":
+                            if (!selectedNode.Text.StartsWith("Titles"))
                             {
-                                if (!selectedNode.Text.StartsWith("Titles"))
-                                {
-                                    throw new Exception(
-                                        "Invalid Xml content for Titles node!\r\n\r\n'Title' Xml content is allowed only for 'Titles'.");
-                                }
+                                throw new Exception(
+                                    "Invalid Xml content for Titles node!\r\n\r\n'Title' Xml content is allowed only for 'Titles'.");
                             }
                             break;
 
                         case "Description":
+                            if (!selectedNode.Text.StartsWith("Descriptions"))
                             {
-                                if (!selectedNode.Text.StartsWith("Descriptions"))
-                                {
-                                    throw new Exception(
-                                        "Invalid Xml content for Descriptions node!\r\n\r\n'Description' Xml content is allowed only for 'Descriptions'.");
-                                }
+                                throw new Exception(
+                                    "Invalid Xml content for Descriptions node!\r\n\r\n'Description' Xml content is allowed only for 'Descriptions'.");
                             }
                             break;
 
                         case "Privilege":
+                            if (!selectedNode.Text.StartsWith("SubArea"))
                             {
-                                if (!selectedNode.Text.StartsWith("SubArea"))
-                                {
-                                    throw new Exception(
-                                        "Invalid Xml content for SubArea node!\r\n\r\n'Privilege' Xml content is allowed only for 'SubArea'.");
-                                }
+                                throw new Exception(
+                                    "Invalid Xml content for SubArea node!\r\n\r\n'Privilege' Xml content is allowed only for 'SubArea'.");
                             }
                             break;
 
@@ -541,39 +580,59 @@ namespace MsCrmTools.SiteMapEditor
         private void TvSiteMapKeyDown(object sender, KeyEventArgs e)
         {
             if (tvSiteMap.SelectedNode == null)
+            {
                 return;
+            }
 
             if (tvSiteMap.SelectedNode.Text != "SiteMap")
             {
                 // Cut
                 if (e.Control && e.KeyCode.ToString() == "X")
+                {
                     clipboard.Cut(tvSiteMap.SelectedNode);
+                }
 
                 // Copy
                 if (e.Control && e.KeyCode.ToString() == "C")
+                {
                     clipboard.Copy(tvSiteMap.SelectedNode);
+                }
 
                 // Delete
                 if (e.Control && e.KeyCode.ToString() == "D")
+                {
                     if (tvSiteMap.SelectedNode != null && tvSiteMap.SelectedNode.Text != "SiteMap")
+                    {
                         ToolStripButtonDeleteClick(null, null);
+                    }
+                }
 
                 // Move Up
                 if (e.Control && e.KeyCode == Keys.Up)
+                {
                     if (tvSiteMap.SelectedNode != null && tvSiteMap.SelectedNode.Parent != null &&
-                        tvSiteMap.SelectedNode.Index != 0)
+                       tvSiteMap.SelectedNode.Index != 0)
+                    {
                         ToolStripButtonMoveUpClick(null, null);
+                    }
+                }
 
                 // Move Down
                 if (e.Control && e.KeyCode == Keys.Down)
+                {
                     if (tvSiteMap.SelectedNode != null && tvSiteMap.SelectedNode.Parent != null &&
-                        tvSiteMap.SelectedNode.Index != tvSiteMap.SelectedNode.Parent.Nodes.Count - 1)
+                       tvSiteMap.SelectedNode.Index != tvSiteMap.SelectedNode.Parent.Nodes.Count - 1)
+                    {
                         ToolStripButtonMoveDownClick(null, null);
+                    }
+                }
             }
 
             // Paste
             if (e.Control && e.KeyCode.ToString() == "V")
+            {
                 clipboard.Paste(tvSiteMap.SelectedNode);
+            }
         }
 
         private void TvSiteMapNodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -604,50 +663,78 @@ namespace MsCrmTools.SiteMapEditor
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
-                        if (existingControl != null) panelContainer.Controls.Remove(existingControl);
+                        if (existingControl != null)
+                        {
+                            panelContainer.Controls.Remove(existingControl);
+                        }
+
                         tsbItemSave.Visible = true;
                     }
                     break;
 
                 case "Area":
                     {
-                        if (collec.Count == 0) collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
+                        if (collec.Count == 0)
+                        {
+                            collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
+                        }
+
                         var ctrl = new AreaControl(collec, webResourcesImageCache, webResourcesHtmlCache, Service, ConnectionDetail.OrganizationMajorVersion >= 9);
                         ctrl.Saved += CtrlSaved;
                         ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
-                        if (existingControl != null) panelContainer.Controls.Remove(existingControl);
+                        if (existingControl != null)
+                        {
+                            panelContainer.Controls.Remove(existingControl);
+                        }
+
                         tsbItemSave.Visible = true;
                     }
                     break;
 
                 case "SubArea":
                     {
-                        if (collec.Count == 0) collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
+                        if (collec.Count == 0)
+                        {
+                            collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
+                        }
+
                         var ctrl = new SubAreaControl(collec, entityCache, webResourcesImageCache, webResourcesHtmlCache,
-                            Service);
+                           Service);
                         ctrl.Saved += CtrlSaved;
                         ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
-                        if (existingControl != null) panelContainer.Controls.Remove(existingControl);
+                        if (existingControl != null)
+                        {
+                            panelContainer.Controls.Remove(existingControl);
+                        }
+
                         tsbItemSave.Visible = true;
                     }
                     break;
 
                 case "Group":
                     {
-                        if (collec.Count == 0) collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
+                        if (collec.Count == 0)
+                        {
+                            collec.Add("Id", string.Format("tempId_{0}", DateTime.Now.Ticks));
+                        }
+
                         var ctrl = new GroupControl(collec);
                         ctrl.Saved += CtrlSaved;
                         ctrl.Dock = DockStyle.Fill;
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
-                        if (existingControl != null) panelContainer.Controls.Remove(existingControl);
+                        if (existingControl != null)
+                        {
+                            panelContainer.Controls.Remove(existingControl);
+                        }
+
                         tsbItemSave.Visible = true;
                     }
                     break;
@@ -660,7 +747,11 @@ namespace MsCrmTools.SiteMapEditor
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
-                        if (existingControl != null) panelContainer.Controls.Remove(existingControl);
+                        if (existingControl != null)
+                        {
+                            panelContainer.Controls.Remove(existingControl);
+                        }
+
                         tsbItemSave.Visible = true;
                     }
                     break;
@@ -673,7 +764,11 @@ namespace MsCrmTools.SiteMapEditor
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
-                        if (existingControl != null) panelContainer.Controls.Remove(existingControl);
+                        if (existingControl != null)
+                        {
+                            panelContainer.Controls.Remove(existingControl);
+                        }
+
                         tsbItemSave.Visible = true;
                     }
                     break;
@@ -686,16 +781,18 @@ namespace MsCrmTools.SiteMapEditor
 
                         panelContainer.Controls.Add(ctrl);
                         ctrl.BringToFront();
-                        if (existingControl != null) panelContainer.Controls.Remove(existingControl);
+                        if (existingControl != null)
+                        {
+                            panelContainer.Controls.Remove(existingControl);
+                        }
+
                         tsbItemSave.Visible = true;
                     }
                     break;
 
                 default:
-                    {
-                        panelContainer.Controls.Clear();
-                        tsbItemSave.Visible = false;
-                    }
+                    panelContainer.Controls.Clear();
+                    tsbItemSave.Visible = false;
                     break;
             }
 
@@ -718,13 +815,17 @@ namespace MsCrmTools.SiteMapEditor
             if (nodeAttributesCollection.ContainsKey("Id"))
             {
                 if (tvSiteMap.SelectedNode.Text.Split(' ').Length == 1)
+                {
                     tvSiteMap.SelectedNode.Text += " (" +
-                                                   ((Dictionary<string, string>)tvSiteMap.SelectedNode.Tag)["Id"] + ")";
-                else
-                    tvSiteMap.SelectedNode.Text = tvSiteMap.SelectedNode.Text.Split(' ')[0] + " (" +
                                                   ((Dictionary<string, string>)tvSiteMap.SelectedNode.Tag)["Id"] + ")";
+                }
+                else
+                {
+                    tvSiteMap.SelectedNode.Text = tvSiteMap.SelectedNode.Text.Split(' ')[0] + " (" +
+                                                 ((Dictionary<string, string>)tvSiteMap.SelectedNode.Tag)["Id"] + ")";
+                }
 
-                tvSiteMap.SelectedNode.Name = tvSiteMap.SelectedNode.Text.Replace(" ", "");
+                tvSiteMap.SelectedNode.Name = tvSiteMap.SelectedNode.Text.Replace(" ", string.Empty);
             }
 
             if (nodeAttributesCollection.ContainsKey("LCID"))
@@ -732,7 +833,7 @@ namespace MsCrmTools.SiteMapEditor
                 tvSiteMap.SelectedNode.Text = tvSiteMap.SelectedNode.Text.Split(' ')[0] + " (" +
                                               ((Dictionary<string, string>)tvSiteMap.SelectedNode.Tag)["LCID"] + ")";
 
-                tvSiteMap.SelectedNode.Name = tvSiteMap.SelectedNode.Text.Replace(" ", "");
+                tvSiteMap.SelectedNode.Name = tvSiteMap.SelectedNode.Text.Replace(" ", string.Empty);
             }
 
             if (nodeAttributesCollection.ContainsKey("_disabled") && nodeAttributesCollection["_disabled"] == "true")
@@ -765,18 +866,30 @@ namespace MsCrmTools.SiteMapEditor
 
                     case 7:
                         if (ConnectionDetail.OrganizationMinorVersion == 0)
+                        {
                             version = "2015";
+                        }
                         else
+                        {
                             version = "2015SP1";
+                        }
+
                         break;
 
                     case 8:
                         if (ConnectionDetail.OrganizationMinorVersion == 0)
+                        {
                             version = "2016";
+                        }
                         else if (ConnectionDetail.OrganizationMinorVersion == 1)
+                        {
                             version = "2016SP1";
+                        }
                         else
+                        {
                             version = "8.2";
+                        }
+
                         break;
                 }
 
@@ -794,7 +907,7 @@ namespace MsCrmTools.SiteMapEditor
 
                     string newNodeText = smcPicker.SelectedNode.Name + " (" + collec["Id"] + ")";
 
-                    if (tvSiteMap.SelectedNode.Nodes.Find(newNodeText.Replace(" ", ""), false).Length > 0)
+                    if (tvSiteMap.SelectedNode.Nodes.Find(newNodeText.Replace(" ", string.Empty), false).Length > 0)
                     {
                         MessageBox.Show(this, "The selected tree node is already present!", "Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -803,7 +916,7 @@ namespace MsCrmTools.SiteMapEditor
                     {
                         var newNode = new TreeNode(newNodeText);
                         newNode.Tag = collec;
-                        newNode.Name = newNodeText.Replace(" ", "");
+                        newNode.Name = newNodeText.Replace(" ", string.Empty);
 
                         foreach (XmlNode childNode in smcPicker.SelectedNode.ChildNodes)
                         {
@@ -833,17 +946,23 @@ namespace MsCrmTools.SiteMapEditor
             {
                 ((Dictionary<string, string>)tvSiteMap.SelectedNode.Tag).Remove("_disabled");
                 tvSiteMap.SelectedNode.ForeColor = Color.Black;
-                tvSiteMap.SelectedNode.Text = tvSiteMap.SelectedNode.Text.Replace(" - disabled", "");
+                tvSiteMap.SelectedNode.Text = tvSiteMap.SelectedNode.Text.Replace(" - disabled", string.Empty);
                 tvSiteMap.SelectedNode.ToolTipText = null;
             }
             else if (e.ClickedItem.Text == "Cut" || e.ClickedItem.Text == "Copy" || e.ClickedItem.Text == "Paste")
             {
                 if (e.ClickedItem.Text == "Cut")
+                {
                     clipboard.Cut(tvSiteMap.SelectedNode);
+                }
                 else if (e.ClickedItem.Text == "Copy")
+                {
                     clipboard.Copy(tvSiteMap.SelectedNode);
+                }
                 else
+                {
                     clipboard.Paste(tvSiteMap.SelectedNode);
+                }
             }
             else
             {
@@ -852,12 +971,12 @@ namespace MsCrmTools.SiteMapEditor
 
                 var newNode = new TreeNode(nodeText);
                 newNode.Tag = new Dictionary<string, string>();
-                newNode.Name = newNode.Text.Replace(" ", "");
+                newNode.Name = newNode.Text.Replace(" ", string.Empty);
 
                 if (newNode.Text == "Descriptions" || newNode.Text == "Titles")
                 {
                     var newSubNode = new TreeNode(newNode.Text.Remove(newNode.Text.Length - 1, 1));
-                    newSubNode.Name = newSubNode.Text.Replace(" ", "");
+                    newSubNode.Name = newSubNode.Text.Replace(" ", string.Empty);
                     newNode.Nodes.Add(newSubNode);
 
                     var e2 = new TreeNodeMouseClickEventArgs(newSubNode, MouseButtons.Left, 1, 0, 0);
@@ -934,7 +1053,7 @@ namespace MsCrmTools.SiteMapEditor
                     DisplaySiteMap();
                     EnableControls(true);
                 },
-                ProgressChanged = e => { SetWorkingMessage(e.UserState.ToString()); }
+                ProgressChanged = e => SetWorkingMessage(e.UserState.ToString())
             });
         }
 
@@ -977,7 +1096,9 @@ namespace MsCrmTools.SiteMapEditor
                                     siteMapId.GetAttributeValue<Guid>("objectid"), new ColumnSet(true));
 
                                 if (tmpSiteMap.GetAttributeValue<OptionSetValue>("componentstate")?.Value != 0)
+                                {
                                     continue;
+                                }
 
                                 tmpSiteMap["name"] =
                                     siteMapId.GetAttributeValue<EntityReference>("appmoduleidunique").Name ?? "Default";
@@ -1048,7 +1169,7 @@ namespace MsCrmTools.SiteMapEditor
 
                     EnableControls(true);
                 },
-                ProgressChanged = e => { SetWorkingMessage(e.UserState.ToString()); }
+                ProgressChanged = e => SetWorkingMessage(e.UserState.ToString())
             });
         }
 
@@ -1133,6 +1254,7 @@ namespace MsCrmTools.SiteMapEditor
                 toolStripDropDownButtonMoreActions.Enabled = enabled;
                 gbSiteMap.Enabled = enabled;
                 gbProperties.Enabled = enabled;
+                toolStripButtonExport.Enabled = enabled;
             };
 
             if (InvokeRequired)
@@ -1186,19 +1308,33 @@ namespace MsCrmTools.SiteMapEditor
             foreach (TreeNode childNode in currentNode.Nodes)
             {
                 if (childNode.Text == "Titles")
+                {
                     titles = childNode;
+                }
                 else if (childNode.Text == "Descriptions")
+                {
                     descriptions = childNode;
+                }
                 else
+                {
                     others.Add(childNode);
+                }
             }
 
             if (titles != null)
+            {
                 AddXmlNode(titles, newNode, hasDisabledParent || collec.ContainsKey("_disabled"));
+            }
+
             if (descriptions != null)
+            {
                 AddXmlNode(descriptions, newNode, hasDisabledParent || collec.ContainsKey("_disabled"));
+            }
+
             foreach (TreeNode otherNode in others)
+            {
                 AddXmlNode(otherNode, newNode, hasDisabledParent || collec.ContainsKey("_disabled"));
+            }
 
             if (collec.ContainsKey("_disabled") && !hasDisabledParent)
             {
@@ -1274,5 +1410,7 @@ namespace MsCrmTools.SiteMapEditor
         {
             CloseTool();
         }
+
+
     }
 }
