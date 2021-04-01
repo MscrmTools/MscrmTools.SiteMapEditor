@@ -114,9 +114,9 @@
             this.toolStripSeparator3,
             this.toolStripButtonLoadSiteMapFromDisk,
             this.toolStripButtonSaveSiteMapToDisk,
+            this.toolStripButtonExport,
             this.toolStripSeparator4,
-            this.toolStripDropDownButtonMoreActions,
-            this.toolStripButtonExport});
+            this.toolStripDropDownButtonMoreActions});
             this.toolStripMain.Location = new System.Drawing.Point(0, 0);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.Size = new System.Drawing.Size(911, 25);
@@ -276,12 +276,11 @@
             // 
             // toolStripButtonExport
             // 
-            this.toolStripButtonExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButtonExport.Enabled = false;
             this.toolStripButtonExport.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExport.Image")));
             this.toolStripButtonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonExport.Name = "toolStripButtonExport";
-            this.toolStripButtonExport.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonExport.Size = new System.Drawing.Size(105, 22);
             this.toolStripButtonExport.Text = "Export to Excel";
             this.toolStripButtonExport.Click += new System.EventHandler(this.TsbExportExcelClick);
             // 
