@@ -38,6 +38,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonLoadSiteMapFromDisk = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSaveSiteMapToDisk = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonExport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownButtonMoreActions = new System.Windows.Forms.ToolStripDropDownButton();
             this.loadEntitiesAndWebResourcesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +50,6 @@
             this.resetCRM2016SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCRM2016SP1SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetDynamics36582SiteMapToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButtonExport = new System.Windows.Forms.ToolStripButton();
             this.nodeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addSystemAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSystemGroupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -185,6 +185,16 @@
             this.toolStripButtonSaveSiteMapToDisk.ToolTipText = "Save SiteMap in a Xml file";
             this.toolStripButtonSaveSiteMapToDisk.Click += new System.EventHandler(this.ToolStripButtonSaveSiteMapToDiskClick);
             // 
+            // toolStripButtonExport
+            // 
+            this.toolStripButtonExport.Enabled = false;
+            this.toolStripButtonExport.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExport.Image")));
+            this.toolStripButtonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonExport.Name = "toolStripButtonExport";
+            this.toolStripButtonExport.Size = new System.Drawing.Size(105, 22);
+            this.toolStripButtonExport.Text = "Export to Excel";
+            this.toolStripButtonExport.Click += new System.EventHandler(this.TsbExportExcelClick);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -273,16 +283,6 @@
             this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Size = new System.Drawing.Size(308, 22);
             this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Text = "Reset Dynamics 365 (8.2) SiteMap to default";
             this.resetDynamics36582SiteMapToDefaultToolStripMenuItem.Click += new System.EventHandler(this.resetDynamics36582SiteMapToDefaultToolStripMenuItem_Click);
-            // 
-            // toolStripButtonExport
-            // 
-            this.toolStripButtonExport.Enabled = false;
-            this.toolStripButtonExport.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExport.Image")));
-            this.toolStripButtonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonExport.Name = "toolStripButtonExport";
-            this.toolStripButtonExport.Size = new System.Drawing.Size(105, 22);
-            this.toolStripButtonExport.Text = "Export to Excel";
-            this.toolStripButtonExport.Click += new System.EventHandler(this.TsbExportExcelClick);
             // 
             // nodeMenu
             // 

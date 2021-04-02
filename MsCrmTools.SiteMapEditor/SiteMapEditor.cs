@@ -33,8 +33,13 @@ namespace MsCrmTools.SiteMapEditor
             {
                 if (locale == 0)
                 {
-
-                    string fetch = $@"<fetch>
+                    if (string.IsNullOrEmpty(ConnectionDetail.UserName))
+                    {
+                        locale = 1033;
+                    }
+                    else
+                    {
+                        string fetch = $@"<fetch>
   <entity name='usersettings' >
     <attribute name='localeid' />
     <link-entity name='systemuser' from='systemuserid' to='systemuserid' >
@@ -44,9 +49,17 @@ namespace MsCrmTools.SiteMapEditor
     </link-entity>
   </entity>
 </fetch>";
-                    locale = Service.RetrieveMultiple(new FetchExpression(fetch)).Entities[0].GetAttributeValue<int>("localeid");
-
-
+                        try
+                        {
+                            var userSettings = Service.RetrieveMultiple(new FetchExpression(fetch)).Entities;
+                            locale = userSettings[0].GetAttributeValue<int>("localeid");
+                        }
+                        catch
+                        {
+                            LogError("Can not retrieve locale");
+                            locale = 1033;
+                        }
+                    }
                 }
                 return locale;
             }
