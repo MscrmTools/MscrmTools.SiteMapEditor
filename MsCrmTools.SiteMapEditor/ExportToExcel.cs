@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -9,24 +10,9 @@ namespace MsCrmTools.SiteMapEditor
 {
     public static class ExportToExcel
     {
-        static string Locale;
-        private static string GetTitle(TreeNode node)
-        {
-            if (node.Nodes.ContainsKey("Titles"))
-            {
-                if (node.Nodes["Titles"].Nodes.ContainsKey(Locale))
-                {
-                    return ((Dictionary<string, string>)node.Nodes["Titles"].Nodes[Locale].Tag)["Title"];
-                    // return node.Nodes["Titles"].Nodes[Locale].Text;
-                }
-                else if (node.Nodes["Titles"].Nodes.ContainsKey("Title(1033)"))
-                {
-                    return ((Dictionary<string, string>)node.Nodes["Titles"].Nodes["Title(1033)"].Tag)["Title"];
-                }
-            }
-            return ((Dictionary<string, string>)node.Tag)["Id"];
-        }
-        internal static void Save(string fileName, TreeView tv, int locale)
+        private static string Locale;
+
+        internal static void Save(string fileName, TreeView tv, int locale, Control parentControl)
         {
             Locale = $"Title({locale})";
             var package = new ExcelPackage();
@@ -62,7 +48,6 @@ namespace MsCrmTools.SiteMapEditor
                     {
                         continue;
                     }
-
 
                     wkSheet.Cells[rowCount, 1].Value = GetTitle(groupNode);
                     AddPropertyCells(wkSheet, ref rowCount, 2, groupNode);
@@ -102,14 +87,19 @@ namespace MsCrmTools.SiteMapEditor
                     rowCount++;
                     groupNodeCount++;
 
-
                     treeNodeCount++;
                 }
                 wkSheet.Cells[wkSheet.Dimension.Address].AutoFitColumns();
-
             }
 
             package.SaveAs(new FileInfo(fileName));
+
+            if (MessageBox.Show(parentControl, $@"File saved to {fileName}:
+
+Would you like to open it now? (Requires Excel)", @"Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Process.Start("Excel.exe", $"\"{fileName}\"");
+            }
         }
 
         private static void AddPropertyCells(ExcelWorksheet wkSheet, ref int rowCount, int colCount, TreeNode node)
@@ -128,8 +118,6 @@ namespace MsCrmTools.SiteMapEditor
             {
                 if (privNode.Text == "Privilege")
                 {
-
-
                     Dictionary<string, string> privTag = (Dictionary<string, string>)privNode.Tag;
                     string priv = "Privilege: ";
                     if (privTag.ContainsKey("Entity"))
@@ -156,6 +144,23 @@ namespace MsCrmTools.SiteMapEditor
                 }
             }
             rowCount--;
+        }
+
+        private static string GetTitle(TreeNode node)
+        {
+            if (node.Nodes.ContainsKey("Titles"))
+            {
+                if (node.Nodes["Titles"].Nodes.ContainsKey(Locale))
+                {
+                    return ((Dictionary<string, string>)node.Nodes["Titles"].Nodes[Locale].Tag)["Title"];
+                    // return node.Nodes["Titles"].Nodes[Locale].Text;
+                }
+                else if (node.Nodes["Titles"].Nodes.ContainsKey("Title(1033)"))
+                {
+                    return ((Dictionary<string, string>)node.Nodes["Titles"].Nodes["Title(1033)"].Tag)["Title"];
+                }
+            }
+            return ((Dictionary<string, string>)node.Tag)["Id"];
         }
     }
 }

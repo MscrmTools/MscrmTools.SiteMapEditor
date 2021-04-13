@@ -26,7 +26,26 @@ namespace MsCrmTools.SiteMapEditor
 {
     public partial class SiteMapEditor : PluginControlBase, IGitHubPlugin, IHelpPlugin
     {
+        internal Clipboard clipboard = new Clipboard();
+        internal List<EntityMetadata> entityCache;
+        internal List<Entity> webResourcesHtmlCache;
+        internal List<Entity> webResourcesImageCache;
         private int locale;
+        private Entity siteMap;
+
+        private XmlDocument siteMapDoc;
+
+        public SiteMapEditor()
+        {
+            InitializeComponent();
+        }
+
+        public string HelpUrl => "https://github.com/MscrmTools/MscrmTools.SiteMapEditor/wiki";
+
+        public string RepositoryName => "MscrmTools.SiteMapEditor";
+
+        public string UserName => "MscrmTools";
+
         internal int Locale
         {
             get
@@ -64,23 +83,6 @@ namespace MsCrmTools.SiteMapEditor
                 return locale;
             }
         }
-        internal Clipboard clipboard = new Clipboard();
-        internal List<EntityMetadata> entityCache;
-        internal List<Entity> webResourcesHtmlCache;
-        internal List<Entity> webResourcesImageCache;
-        private Entity siteMap;
-        private XmlDocument siteMapDoc;
-
-        public SiteMapEditor()
-        {
-            InitializeComponent();
-        }
-
-        public string HelpUrl => "https://github.com/MscrmTools/MscrmTools.SiteMapEditor/wiki";
-
-        public string RepositoryName => "MscrmTools.SiteMapEditor";
-
-        public string UserName => "MscrmTools";
 
         #region Main ToolStrip Menu
 
@@ -357,16 +359,6 @@ namespace MsCrmTools.SiteMapEditor
             }
         }
 
-        private void TsbMainImportClick(object sender, EventArgs e)
-        {
-            ExecuteMethod(UpdateSiteMap);
-        }
-
-        private void TsbMainOpenSiteMapClick(object sender, EventArgs e)
-        {
-            ExecuteMethod(LoadSiteMap);
-        }
-
         private void TsbExportExcelClick(object sender, EventArgs e)
         {
             var sfd = new SaveFileDialog
@@ -378,9 +370,18 @@ namespace MsCrmTools.SiteMapEditor
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-
-                ExportToExcel.Save(sfd.FileName, tvSiteMap, Locale);
+                ExportToExcel.Save(sfd.FileName, tvSiteMap, Locale, this);
             }
+        }
+
+        private void TsbMainImportClick(object sender, EventArgs e)
+        {
+            ExecuteMethod(UpdateSiteMap);
+        }
+
+        private void TsbMainOpenSiteMapClick(object sender, EventArgs e)
+        {
+            ExecuteMethod(LoadSiteMap);
         }
 
         #endregion Main ToolStrip Menu
@@ -1423,7 +1424,5 @@ namespace MsCrmTools.SiteMapEditor
         {
             CloseTool();
         }
-
-
     }
 }
