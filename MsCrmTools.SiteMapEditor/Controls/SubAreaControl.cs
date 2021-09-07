@@ -118,6 +118,8 @@ namespace MsCrmTools.SiteMapEditor.Controls
                     collection.Add("GetStartedPanePathOutlook", txtSubAreaGetStartedPanePathOutlook.Text);
                 if (txtSubAreaIcon.Text.Length > 0)
                     collection.Add("Icon", txtSubAreaIcon.Text);
+                if (txtVectorIcon.Text.Length > 0)
+                    collection.Add("VectorIcon", txtVectorIcon.Text);
                 if (txtSubAreaId.Text.Length > 0)
                     collection.Add("Id", txtSubAreaId.Text);
                 if (txtSubAreaUrl.Text.Length > 0)
@@ -239,7 +241,7 @@ namespace MsCrmTools.SiteMapEditor.Controls
 
             if (wrp.ShowDialog() == DialogResult.OK)
             {
-                txtVectorIcon.Text = "$webresource:" + wrp.SelectedResource;
+                txtVectorIcon.Text = "/Webresources/" + wrp.SelectedResource;
             }
         }
 
@@ -308,6 +310,7 @@ namespace MsCrmTools.SiteMapEditor.Controls
             txtSubAreaGetStartedPanePathAdminOutlook.Text = collec.ContainsKey("GetStartedPanePathAdminOutlook") ? collec["GetStartedPanePathAdminOutlook"] : "";
             txtSubAreaGetStartedPanePathOutlook.Text = collec.ContainsKey("GetStartedPanePathOutlook") ? collec["GetStartedPanePathOutlook"] : "";
             txtSubAreaIcon.Text = collec.ContainsKey("Icon") ? collec["Icon"] : "";
+            txtVectorIcon.Text = collec.ContainsKey("VectorIcon") ? collec["VectorIcon"] : "";
             txtSubAreaId.Text = collec.ContainsKey("Id") ? collec["Id"] : "";
             txtSubAreaUrl.Text = collec.ContainsKey("Url") ? collec["Url"] : "";
             txtSubAreaResourceId.Text = collec.ContainsKey("ResourceId") ? collec["ResourceId"] : "";
